@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a32c312d119c74e425681ed21e570f57",
+    "content-hash": "8a2b3e16fb37efc7b58871fcce0b2059",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -48,6 +48,40 @@
                 "web"
             ],
             "time": "2018-02-04T12:54:57+00:00"
+        },
+        {
+            "name": "bailangzhan/yii2-webuploader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bailangzhan/yii2-webuploader.git",
+                "reference": "988b70baa21d16d477c035de22ae9d4d47aadb59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/bailangzhan/yii2-webuploader/988b70baa21d16d477c035de22ae9d4d47aadb59.zip",
+                "reference": "988b70baa21d16d477c035de22ae9d4d47aadb59",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "manks\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "yii2-webuploader组件",
+            "keywords": [
+                "webuploader",
+                "yii2"
+            ],
+            "time": "2018-01-12T04:02:15+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -3667,7 +3701,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bailangzhan/yii2-webuploader": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

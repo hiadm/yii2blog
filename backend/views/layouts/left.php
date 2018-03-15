@@ -14,22 +14,23 @@
             </div>
         </div>
 
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
+
 
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    ['label' => 'Menu Yii2Blog', 'options' => ['class' => 'header']],
+                    [
+                        'label' => '内容管理',
+                        'icon' => 'share',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => '专题管理', 'icon' => 'file-code-o', 'url' => ['/content/subject']],
+                            ['label' => '标签管理', 'icon' => 'file-code-o', 'url' => ['/content/tag']],
+                            ['label' => '文章管理', 'icon' => 'file-code-o', 'url' => ['/content/article']],
+                        ],
+                    ],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],

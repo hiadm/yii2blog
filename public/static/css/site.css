@@ -118,3 +118,10 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.delImage {
+    position: absolute;
+    top: 5px;
+    right: 5px !important;
+    display: none !important;
+}
+

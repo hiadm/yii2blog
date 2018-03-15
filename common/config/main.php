@@ -3,6 +3,9 @@ return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+
+        '@webPath' => \Yii::getAlias('@public'),
+        '@webUrl' => '/',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -10,4 +13,6 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'charset' => 'utf-8',
+    'language' => 'zh-CN',
 ];
