@@ -2,6 +2,7 @@
 
 namespace backend\modules\content\controllers;
 
+use http\Env\Response;
 use Yii;
 use backend\models\Tag;
 use backend\models\SearchTag;
@@ -107,7 +108,24 @@ class TagController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $id = intval($id);
+        if ($id <= 0){
+            Yii::$app->session->setFlash('info', '传递参数错误。');
+        }
+
+        $model = $this->findModel($id);
+
+        if(!$model->canDelete()){
+            Yii::$app->session->setFlash('info', '请先删除关联文章。');
+        }else{
+
+            if ($model->delete())
+                Yii::$app->session->setFlash('info', '删除标签成功。');
+            else
+                Yii::$app->session->setFlash('info', '删除标签失败。');
+        }
+
+
 
         return $this->redirect(['index']);
     }
@@ -126,5 +144,34 @@ class TagController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+
+    /**
+     * ajax 携带subject id 请求可用标签
+     */
+    public function actionAjaxGetTags(){
+        if (Yii::$app->request->isAjax){
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //获取专题id
+            $subject_id = intval(Yii::$app->request->post('subject_id'));
+            if ($subject_id <= 0)
+                return ['errorno'=>1, 'message'=>'传递参数错误 请重试。'];
+
+            //根据专题id获取所有标签
+            $tags = Tag::find()
+                ->select(['name', 'id'])
+                ->where(['subject_id' => $subject_id])
+                ->orderBy(['id'=>SORT_DESC])
+                ->all();
+            if ($tags)
+                return ['errorno'=>0, 'data'=>$tags];
+
+            return ['errorno'=>1, 'message'=>'没有可用标签。'];
+
+
+        }
+        return false;
     }
 }

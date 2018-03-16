@@ -10,7 +10,7 @@ return [
         'delimiter' => ',',
         // 基本配置
         'baseConfig' => [
-            'defaultImage' => 'http://img1.imgtn.bdimg.com/it/u=2056478505,162569476&fm=26&gp=0.jpg',
+            'defaultImage' => 'http://www.dev.com/static/img/bg.png',
             'disableGlobalDnd' => true,
             'accept' => [
                 'title' => 'Images',
@@ -25,5 +25,5 @@ return [
     'imageUploadRelativePath' => '../static/uploaded/', // 图片上传的path
     'imageUploadSuccessPath' => 'static/uploaded/', // 图片上传成功后，url
     //标签上限
-    'tagsLimit' => 2,
+    'tagsLimit' => 25,
 ];

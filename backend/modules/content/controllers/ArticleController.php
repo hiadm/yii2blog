@@ -2,22 +2,21 @@
 
 namespace backend\modules\content\controllers;
 
-use backend\models\Notice;
-use Yii;
 use backend\models\Subject;
-use backend\models\SearchSubject;
+use backend\models\Tag;
+use Yii;
+use backend\models\Article;
+use backend\models\SearchArticle;
 use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use common\components\Upload as NewUpload;
 
-
 /**
- * SubjectController implements the CRUD actions for Subject model.
+ * ArticleController implements the CRUD actions for Article model.
  */
-class SubjectController extends Controller
+class ArticleController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,12 +34,12 @@ class SubjectController extends Controller
     }
 
     /**
-     * Lists all Subject models.
+     * Lists all Article models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchSubject();
+        $searchModel = new SearchArticle();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -50,15 +49,13 @@ class SubjectController extends Controller
     }
 
     /**
-     * Displays a single Subject model.
+     * Displays a single Article model.
      * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        //获取对应专题
-        $model->notice = Notice::findOne($model->notice_id)->notice;
 
         return $this->render('view', [
             'model' => $model,
@@ -66,25 +63,49 @@ class SubjectController extends Controller
     }
 
     /**
-     * Creates a new Subject model.
+     * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Subject();
+        $model = new Article();
 
         if ($model->load(Yii::$app->request->post()) && $model->store()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //获取选中专题
+            $curSubject = [];
+            $curTags = [];
+            if(!empty($model->subject_id)){
+                $curSubject = Subject::find()
+                    ->select(['name','id'])
+                    ->where(['id'=>$model->subject_id])
+                    ->indexBy('id')
+                    ->asArray()
+                    ->column();
+
+                //获取可用标签
+                $curTags = Tag::find()
+                    ->select(['name','id'])
+                    ->where(['subject_id'=>$model->subject_id])
+                    ->indexBy('id')
+                    ->orderBy(['id'=>SORT_DESC])
+                    ->asArray()
+                    ->column();
+            }
+
+
             return $this->render('create', [
                 'model' => $model,
+                'curSubject' => $curSubject,
+                'curTags' => $curTags
             ]);
         }
     }
 
     /**
-     * Updates an existing Subject model.
+     * Updates an existing Article model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -92,20 +113,46 @@ class SubjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        //获取对应专题
-        $model->notice = Notice::findOne($model->notice_id)->notice;
 
         if ($model->load(Yii::$app->request->post()) && $model->renew()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //获取当前文章 关联的内容及标签ids
+            $model->getRelateDate();
+
+
+            //获取选中专题 及标签列表
+            $curSubject = [];
+            $curTags = [];
+            if(!empty($model->subject_id)){
+                $curSubject = Subject::find()
+                    ->select(['name','id'])
+                    ->where(['id'=>$model->subject_id])
+                    ->indexBy('id')
+                    ->asArray()
+                    ->column();
+
+                //获取可用标签
+                $curTags = Tag::find()
+                    ->select(['name','id'])
+                    ->where(['subject_id'=>$model->subject_id])
+                    ->indexBy('id')
+                    ->orderBy(['id'=>SORT_DESC])
+                    ->asArray()
+                    ->column();
+            }
+
+
             return $this->render('update', [
                 'model' => $model,
+                'curSubject' => $curSubject,
+                'curTags' => $curTags
             ]);
         }
     }
 
     /**
-     * Deletes an existing Subject model.
+     * Deletes an existing Article model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -113,26 +160,24 @@ class SubjectController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if(empty($model->tags)){
-            $model->discard();
-
-        }else{
-            Yii::$app->session->setFlash('info', '请先清空该专题的所有标签。');
-        }
+        if($model->discard()){
+            Yii::$app->session->setFlash('info', '删除文章成功。');
+        }else
+            Yii::$app->session->setFlash('info', '删除文章失败。');
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Subject model based on its primary key value.
+     * Finds the Article model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Subject the loaded model
+     * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Subject::findOne($id)) !== null) {
+        if (($model = Article::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -150,7 +195,7 @@ class SubjectController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
                 $model = new NewUpload();
-                $info = $model->upImage('subject_');
+                $info = $model->upImage('article_');
 
                 if ($info && is_array($info)) {
                     return $info;
@@ -164,31 +209,5 @@ class SubjectController extends Controller
         }
         throw new MethodNotAllowedHttpException('请求方式不被允许。');
 
-    }
-
-    /**
-     * ajax请求专题
-     */
-    public function actionAjaxGetSubjects(){
-        if (Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            //获取请求数据
-            $name = Yii::$app->request->post('subject');
-            if (empty($name))
-                return ['errorno'=>1, 'message'=>'传递参数错误 请重试。'];
-            $subjects = Subject::find()
-                ->select(['id','name'])
-                ->where(['like', 'name', $name])
-                ->limit(10)
-                ->orderBy(['id'=>SORT_DESC])
-                ->all();
-
-            if($subjects){
-                return ['errorno'=>0, 'data'=>$subjects];
-            }
-            return ['errorno'=>1, 'message'=>'没有相似专题。'];
-        }
-        return false;
     }
 }

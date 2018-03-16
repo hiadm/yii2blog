@@ -122,6 +122,10 @@ a.desc:after {
     position: absolute;
     top: 5px;
     right: 5px !important;
-    display: none !important;
+    /*display: none !important;*/
 }
-
+.box-body,
+.table-responsive {
+    min-height: .01%;
+    overflow: hidden;
+}

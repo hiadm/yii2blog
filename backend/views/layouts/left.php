@@ -26,9 +26,9 @@
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => '专题管理', 'icon' => 'file-code-o', 'url' => ['/content/subject']],
-                            ['label' => '标签管理', 'icon' => 'file-code-o', 'url' => ['/content/tag']],
-                            ['label' => '文章管理', 'icon' => 'file-code-o', 'url' => ['/content/article']],
+                            ['label' => '专题', 'icon' => 'send-o', 'url' => ['/content/subject']],
+                            ['label' => '标签', 'icon' => 'send-o', 'url' => ['/content/tag']],
+                            ['label' => '文章', 'icon' => 'send-o', 'url' => ['/content/article']],
                         ],
                     ],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],

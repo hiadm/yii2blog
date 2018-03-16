@@ -77,6 +77,9 @@ class Tag extends \yii\db\ActiveRecord
     }
 
 
+
+
+
     /**
      * @inheritdoc
      */
@@ -130,5 +133,21 @@ class Tag extends \yii\db\ActiveRecord
         }
         return false;
 
+    }
+
+    /**
+     * 检测是否可删除标签
+     * @return bool #可删除true 否则返回false
+     */
+    public function canDelete(){
+        //检测是否与文章关联
+        $count = (new yii\db\Query)
+            ->from('{{%article_tag}}')
+            ->where(['tag_id'=>$this->id])
+            ->count();
+
+        if ($count)
+            return false;
+        return true;
     }
 }

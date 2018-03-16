@@ -67,7 +67,7 @@ $js = <<<JS
                  loading.addClass('hidden');
                  if(!data.errorno){
                      //有数据
-                     subjects = data.data;
+                     var subjects = data.data;
                      var str = '';
                      for(var item in subjects){
                          str += '<label><input type="radio" name="Tag[subject_id]" value="'+ subjects[item]['id']+ '">' +subjects[item]['name']+ '</label>';
