@@ -15,15 +15,24 @@ return [
         'content' => [
             'class' => 'backend\modules\content\Module',
         ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            //'layout' => 'right-menu',
+        ],
+        'member' => [
+            'class' => 'backend\modules\member\Module',
+        ],
     ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            //'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityClass' => 'mdm\admin\models\User',
+            //'loginUrl' => ['admin/user/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -56,7 +65,25 @@ return [
                 ],
             ],
         ],
+        'i18n'=>[
+            'translations'=>[
+                '*'=>[
+                    'class'=>'yii\i18n\PhpMessageSource',
+                    'fileMap'=>[
+                        'common'=>'common.php',
+                    ],
+                ],
+            ],
+        ],
 
     ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'admin/*',
+        ]
+    ],
     'params' => $params,
+
 ];
