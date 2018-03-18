@@ -39,6 +39,34 @@ class Article extends \yii\db\ActiveRecord
 
 
     /**
+     * 绑定事件
+     */
+    public function init ()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_DELETE, [$this, 'onAfterDelete']);
+        $this->on(self::EVENT_AFTER_INSERT, [$this, 'onAfterInsert']);
+    }
+
+    /**
+     * 新建文章后更新专题收录数目
+     * @param $event
+     */
+    public function onAfterInsert($event){
+        Subject::updateAllCounters(['total'=>1], ['id'=>$this->subject_id]);
+    }
+
+
+    /**
+     * 删除文章后 更新专题收录数目
+     *
+     * @param $event
+     */
+    public function onAfterDelete($event){
+        Subject::updateAllCounters(['total'=>-1], ['id'=>$this->subject_id]);
+    }
+
+    /**
      * @inheritdoc
      */
     public static function tableName()

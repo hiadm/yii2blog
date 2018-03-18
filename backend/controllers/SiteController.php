@@ -60,6 +60,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::error('测试日志','error');
         return $this->render('index');
     }
 

@@ -22,6 +22,9 @@ return [
         'member' => [
             'class' => 'backend\modules\member\Module',
         ],
+        'setting' => [
+            'class' => 'backend\modules\setting\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -42,7 +45,7 @@ return [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class' => 'yii\log\DbTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
