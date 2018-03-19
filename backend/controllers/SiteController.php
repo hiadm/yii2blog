@@ -2,10 +2,14 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Json;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
+
+
 
 /**
  * Site controller
@@ -60,7 +64,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        \Yii::error('测试日志','error');
+        //$auth = \Yii::$app->authManager;
+
+        //给author 添加修改删除自己文章的权限
+
+
+
+
+        //var_dump($all);
+        //die;
+
+
         return $this->render('index');
     }
 

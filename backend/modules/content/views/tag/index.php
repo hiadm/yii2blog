@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use mdm\admin\components\Helper as MdmHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\SearchTag */
@@ -12,7 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tag-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a('创建标签', ['create'], ['class' => 'btn btn-success btn-flat pull-left']) ?>
+        <?php
+        if(MdmHelper::checkRoute('create')) {
+            echo Html::a('创建标签', ['create'], ['class' => 'btn btn-success btn-flat pull-left']);
+        }
+        ?>
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="box-body table-responsive no-padding">
@@ -36,7 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'created_at:date',
                 // 'updated_at',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => MdmHelper::filterActionColumn('{view}{update}{delete}'),
+                ],
             ],
         ]); ?>
     </div>

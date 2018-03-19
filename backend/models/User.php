@@ -21,7 +21,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $password;
-    const BACKEND_PERMISSION = 'backend';
+    const BACKEND_PERMISSION = 'author';
 
 
     /**

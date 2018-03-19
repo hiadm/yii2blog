@@ -7,7 +7,7 @@ use yii\db\Migration;
  */
 class m180317_074845_user_add_isvip_column extends Migration
 {
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = '{{%user}}';
 
     /**
      * {@inheritdoc}

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\Helper;
 use backend\models\Content;
+use mdm\admin\components\Helper as MdmHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Article */
 
@@ -13,14 +14,26 @@ $this->params['breadcrumbs'][] = Helper::truncate_utf8_string($this->title,15);
 ?>
 <div class="article-view box box-primary">
     <div class="box-header">
-        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
-        <?= Html::a('删除', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger btn-flat',
-            'data' => [
-                'confirm' => '您确定要删除该文章吗?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php
+        if(MdmHelper::checkRoute('update')) {
+            echo Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']);
+
+        }
+        ?>
+        <?php
+        if(MdmHelper::checkRoute('delete')) {
+            echo Html::a('删除', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger btn-flat',
+                'data' => [
+                    'confirm' => '您确定要删除该文章吗?',
+                    'method' => 'post',
+                ],
+            ]);
+        }
+        ?>
+        <?php
+        echo Html::a('返回', ['index'],['class' => 'btn btn-success btn-flat']);
+        ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?= DetailView::widget([
