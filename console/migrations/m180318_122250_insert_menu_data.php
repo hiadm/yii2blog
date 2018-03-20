@@ -9,21 +9,172 @@ class m180318_122250_insert_menu_data extends Migration
 {
     const TABLE_NAME = '{{%menu}}';
     public $menuData =
-    [
+        [
+            [
+                'id'=>1,
+                'name' => '内容管理',
+                'parent' => null,
+                'route' => null,
+                'order' => '11',
+                'data' => null,
+            ],
+            [
+                'id'=>2,
+                'name' => '专题',
+                'parent' => '1',
+                'route' => '/content/subject/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>3,
+                'name' => '标签',
+                'parent' => '1',
+                'route' => '/content/tag/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>4,
+                'name' => '文章',
+                'parent' => '1',
+                'route' => '/content/article/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>5,
+                'name' => '权限管理',
+                'parent' => null,
+                'route' => null,
+                'order' => '12',
+                'data' => null,
+            ],
+            [
+                'id'=>6,
+                'name' => '角色',
+                'parent' => '5',
+                'route' => '/admin/role/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>7,
+                'name' => '权限',
+                'parent' => '5',
+                'route' => '/admin/permission/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>8,
+                'name' => '路由',
+                'parent' => '5',
+                'route' => '/admin/route/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>9,
+                'name' => '规则',
+                'parent' => '5',
+                'route' => '/admin/rule/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>10,
+                'name' => '站点设置',
+                'parent' => null,
+                'route' => null,
+                'order' => '17',
+                'data' => null,
+            ],
+            [
+                'id'=>11,
+                'name' => '菜单',
+                'parent' => '10',
+                'route' => '/admin/menu/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>12,
+                'name' => '日志',
+                'parent' => '10',
+                'route' => '/setting/log/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>13,
+                'name' => 'SEO设置',
+                'parent' => '10',
+                'route' => '/setting/seo/update',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>14,
+                'name' => '系统工具',
+                'parent' => null,
+                'route' => null,
+                'order' => '18',
+                'data' => null,
+            ],
+            [
+                'id'=>15,
+                'name' => 'Debug',
+                'parent' => '14',
+                'route' => '/debug/default/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>16,
+                'name' => 'Gii',
+                'parent' => '14',
+                'route' => '/gii/default/index',
+                'order' => null,
+                'data' => null,
+            ],
+            [
+                'id'=>17,
+                'name' => '成员管理',
+                'parent' => null,
+                'route' => null,
+                'order' => '14',
+                'data' => null,
+            ],
+            [
+                'id'=>18,
+                'name' => '用户',
+                'parent' => '17',
+                'route' => '/member/user/index',
+                'order' => null,
+                'data' => null,
+            ],
+
+
+
+
+
+        ];
+    /*[
     0 => [
-        'id'=>15,
-        'name' => '专题',
-        'parent' => '16',
-        'route' => '/content/subject/index',
-        'order' => null,
-        'data' => null,
-    ],
-    1 => [
         'id'=>16,
         'name' => '内容管理',
         'parent' => null,
         'route' => null,
         'order' => '11',
+        'data' => null,
+    ],
+    1 => [
+        'id'=>15,
+        'name' => '专题',
+        'parent' => '16',
+        'route' => '/content/subject/index',
+        'order' => null,
         'data' => null,
     ],
     2 => [
@@ -83,54 +234,6 @@ class m180318_122250_insert_menu_data extends Migration
         'data' => null,
     ],
     9 => [
-        'id'=>26,
-        'name' => '菜单',
-        'parent' => '32',
-        'route' => '/admin/menu/index',
-        'order' => null,
-        'data' => null,
-    ],
-    10 => [
-        'id'=>27,
-        'name' => '系统工具',
-        'parent' => null,
-        'route' => null,
-        'order' => '18',
-        'data' => null,
-    ],
-    11 => [
-        'id'=>28,
-        'name' => 'Debug',
-        'parent' => '27',
-        'route' => '/debug/default/index',
-        'order' => null,
-        'data' => null,
-    ],
-    12 => [
-        'id'=>29,
-        'name' => 'Gii',
-        'parent' => '27',
-        'route' => '/gii/default/index',
-        'order' => null,
-        'data' => null,
-    ],
-    13 => [
-        'id'=>30,
-        'name' => '成员管理',
-        'parent' => null,
-        'route' => null,
-        'order' => '14',
-        'data' => null,
-    ],
-    14 => [
-        'id'=>31,
-        'name' => '用户',
-        'parent' => '30',
-        'route' => '/member/user/index',
-        'order' => null,
-        'data' => null,
-    ],
-    15 => [
         'id'=>32,
         'name' => '站点设置',
         'parent' => null,
@@ -138,7 +241,15 @@ class m180318_122250_insert_menu_data extends Migration
         'order' => '17',
         'data' => null,
     ],
-    16 => [
+    10 => [
+        'id'=>26,
+        'name' => '菜单',
+        'parent' => '32',
+        'route' => '/admin/menu/index',
+        'order' => null,
+        'data' => null,
+    ],
+    11 => [
         'id'=>33,
         'name' => '日志',
         'parent' => '32',
@@ -146,7 +257,7 @@ class m180318_122250_insert_menu_data extends Migration
         'order' => null,
         'data' => null,
     ],
-    17 => [
+    12 => [
         'id'=>34,
         'name' => 'SEO设置',
         'parent' => '32',
@@ -154,7 +265,52 @@ class m180318_122250_insert_menu_data extends Migration
         'order' => null,
         'data' => null,
     ],
-];
+    13 => [
+        'id'=>27,
+        'name' => '系统工具',
+        'parent' => null,
+        'route' => null,
+        'order' => '18',
+        'data' => null,
+    ],
+    14 => [
+        'id'=>28,
+        'name' => 'Debug',
+        'parent' => '27',
+        'route' => '/debug/default/index',
+        'order' => null,
+        'data' => null,
+    ],
+    15 => [
+        'id'=>29,
+        'name' => 'Gii',
+        'parent' => '27',
+        'route' => '/gii/default/index',
+        'order' => null,
+        'data' => null,
+    ],
+    17 => [
+        'id'=>30,
+        'name' => '成员管理',
+        'parent' => null,
+        'route' => null,
+        'order' => '14',
+        'data' => null,
+    ],
+    18 => [
+        'id'=>31,
+        'name' => '用户',
+        'parent' => '30',
+        'route' => '/member/user/index',
+        'order' => null,
+        'data' => null,
+    ],
+
+
+
+
+
+];*/
 
     /**
      * {@inheritdoc}

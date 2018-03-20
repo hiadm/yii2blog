@@ -23,6 +23,7 @@ class m180315_032627_create_subject_table extends Migration
             'desc' => $this->string(128)->notNull()->defaultValue('')->comment('描述'),
             'logo' => $this->string(64)->notNull()->defaultValue('')->comment('Logo'),
             'type' => $this->tinyInteger()->notNull()->defaultValue(0)->comment('类型'),
+            'total' => $this->integer()->notNull()->defaultValue(0)->comment('收录数'),
             'status' => $this->tinyInteger()->notNull()->defaultValue(0)->comment('状态'),
             'notice_id' => $this->integer()->notNull()->defaultValue(0)->comment('布告'),
             'created_by' => $this->integer()->notNull()->defaultValue(0)->comment('创建者'),

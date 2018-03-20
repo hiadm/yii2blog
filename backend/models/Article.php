@@ -233,20 +233,23 @@ class Article extends \yii\db\ActiveRecord
                 throw new \Exception('保存文章失败');
 
             //保存文章与标签关联信息
-            $rel = [];
-            foreach($this->tag_ids as $id){
-                $rel[] = [
-                    'article_id' => $this->id,
-                    'tag_id' => $id
-                ];
+            if($this->tag_ids){
 
+                $rel = [];
+                foreach($this->tag_ids as $id){
+                    $rel[] = [
+                        'article_id' => $this->id,
+                        'tag_id' => $id
+                    ];
+
+                }
+
+                $ret = Yii::$app->db->createCommand()
+                    ->batchInsert("{{%article_tag}}", ['article_id', 'tag_id'], $rel)
+                    ->execute();
+                if ($ret === false)
+                    throw new \Exception('保存文章标签关联数据失败.');
             }
-
-            $ret = Yii::$app->db->createCommand()
-                ->batchInsert("{{%article_tag}}", ['article_id', 'tag_id'], $rel)
-                ->execute();
-            if ($ret === false)
-                throw new \Exception('保存文章标签关联数据失败.');
 
 
 

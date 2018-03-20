@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m180318_134957_insert_route_data
  */
-class m180318_134957_insert_route_data extends Migration
+class m180318_122249_insert_route_data extends Migration
 {
     public $routeData = "";
     const TABLE_NAME = 'auth_item';

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use mdm\admin\components\Helper as MdmHelper;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Article */
@@ -11,7 +12,10 @@ use yii\helpers\Url;
 
 <div class="article-form box box-primary">
     <?php $form = ActiveForm::begin([
-        'enableClientValidation'=>false
+//        'enableClientValidation'=>false,
+        'options' => [
+            'onkeydown'=>"if(event.keyCode==13){return false;}"
+        ],
     ]); ?>
     <div class="box-body table-responsive">
         <div class="row">
@@ -87,8 +91,18 @@ use yii\helpers\Url;
 
                 <hr>
 
+                <?php
+                if(MdmHelper::checkRoute('tag/create')) {
+                    echo $form->field($model, 'tag_str',[
+                        'template' => '{label}{input}{error}<p class="text-danger">新建标签，多个用逗号分割。.</p>'
+                    ])->textInput();
+
+                }
+
+                ?>
+
                 <!--新建标签-->
-                <?= $form->field($model, 'tag_str',[
+                <?php $form->field($model, 'tag_str',[
                     'template' => '{label}{input}{error}<p class="text-danger">新建标签，多个用逗号分割。.</p>'
                 ])->textInput()?>
 

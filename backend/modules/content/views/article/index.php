@@ -68,7 +68,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => MdmHelper::filterActionColumn('{view}{update}{delete}'),
+                    //'template' => MdmHelper::filterActionColumn('{view}{update}{delete}'),
+                    'buttons' => [
+                        'update' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>',$url . '&author_id='.$model->created_by);
+                        },
+                        /*'delete' => function ($url, $model, $key) {
+                            // return the button HTML code
+                        }*/
+                    ],
                 ],
             ],
         ]); ?>
