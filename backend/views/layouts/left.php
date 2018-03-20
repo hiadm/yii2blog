@@ -18,6 +18,7 @@ use dmstr\widgets\Menu;
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
+
         <div class="user-panel"></div>
 
 
@@ -85,7 +86,7 @@ use dmstr\widgets\Menu;
                 $return['options'] = $data;
             }
             //没配置图标的显示默认图标
-            (!isset($return['icon']) || !$return['icon']) && $return['icon'] = 'circle-o-notch';
+            (!isset($return['icon']) || !$return['icon']) && $return['icon'] = 'circle-o-notch text-yellow';
             $items && $return['items'] = $items;
             return $return;
         };
