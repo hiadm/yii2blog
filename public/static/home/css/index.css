@@ -1,0 +1,47 @@
+/*首页*/
+.content .slide{
+	margin-bottom:25px;
+}
+.content .subject{
+	margin-bottom:25px;
+
+}
+.content .subject ul{
+	list-style: none;
+	overflow: hidden;
+	padding: 0;
+}
+.content .subject ul li{
+	float: left;
+}
+.content .subject ul li.subjects{
+	
+	height: 34px;
+	border: 1px solid #dcdcdc;
+	border-radius: 4px;
+	overflow: hidden;
+	vertical-align: top;
+	margin: 0 20px 18px 0;
+}
+.content .subject a{
+	/*display: block;*/
+	line-height: 34px;
+}
+.content .subject a > img{
+	width:34px;
+	height:34px;
+	float: left;
+}
+.content .subject a > span{
+	float: right;
+	padding:0 3px;
+	color: #666;
+	font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei;
+}
+.content .subject a > span:hover{
+	color: #333;
+}
+.content .subject a > span > i.badge{
+	margin:0 2px;
+	background-color: #FF5722;
+}

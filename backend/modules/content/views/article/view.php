@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = Helper::truncate_utf8_string($this->title,15);
     </div>
     <div class="box-body table-responsive no-padding">
         <?= DetailView::widget([
+            'template' => "<tr><th width='120'>{label}</th><td>{value}</td></tr>",
             'model' => $model,
             'attributes' => [
                 'id',

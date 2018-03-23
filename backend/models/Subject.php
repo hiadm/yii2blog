@@ -38,6 +38,7 @@ class Subject extends \yii\db\ActiveRecord
         return $this->hasMany(Tag::className(), ['subject_id' => 'id']);
     }
 
+
     /**
      * @inheritdoc
      */

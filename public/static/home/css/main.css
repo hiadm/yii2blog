@@ -1,0 +1,261 @@
+/*重写bootstrap*/
+.container{
+	max-width: 960px;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #EF9181;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus {
+    color: #EF9181;
+    background-color: transparent;
+}
+
+
+/*header*/
+.header{
+	/*line-height: 56px;*/
+	font-size: 1.1em;
+	font-family: Microsoft YaHei;
+}
+.header .navbar-form{
+	margin-bottom: 0;
+}
+.logo{
+	width: 100px;
+	height: 50px;
+}
+
+/* reset webkit search input browser style */
+.search input {
+	outline: none;
+
+}
+.search input[type=search] {
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	font-family: inherit;
+	font-size: 50%;
+}
+.search input::-webkit-search-decoration,
+.search input::-webkit-search-cancel-button {
+	display: none; /* remove the search and cancel icon */
+}
+
+/* search input field */
+.search input[type=search] {
+	background: #ededed url(../img/search-icon.png) no-repeat 9px center;
+	border: solid 1px #ccc;
+	padding: 9px 10px 9px 32px;
+	width: 55px;
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+.search input[type=search]:focus {
+	width: 130px;
+	background-color: #fff;
+	border-color: #6dcff6;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+/* placeholder */
+.search input:-moz-placeholder {
+	color: #999;
+}
+.search input::-webkit-input-placeholder {
+	color: #999;
+}
+
+/*footer*/
+footer {
+    background: #333;
+    color: #eee;
+    font-size: 11px;
+    padding: 20px;
+}
+ul.unstyled {
+    list-style: none;
+    padding: 0;
+}
+footer h6 {
+    color: white;
+}
+.img-radius-3{
+	border-radius: 3px;
+}
+.img-radius-5{
+	border-radius: 5px;
+}
+.img-radius-8{
+	border-radius: 8px;
+}
+.img-radius-full{
+	border-radius: 100%;
+}
+.font-pretty{
+	font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+}
+.font-size-14{
+	font-size: 1.2em;
+}
+a.txt-link{
+	color: #666;
+	text-decoration: none;
+}
+a.txt-link:hover,
+a.txt-link:active,
+a.txt-link:visited
+{
+	color:#333 !important;
+}
+
+
+
+
+
+
+
+
+
+
+/*文章列表*/
+.content .articles {
+	margin-bottom:25px;
+}
+.content .articles ul{
+	list-style: none;
+	padding: 0px;
+}
+.content .articles ul li{
+	min-height: 140px;
+    width: 100%;
+    margin: 0 0 17px;
+    padding: 0 2px 17px 0;
+    border-bottom: 1px solid #f0f0f0;
+    word-wrap: break-word;
+}
+/*作者样式*/
+.content .articles .author{
+	line-height: 100%;
+}
+.content .articles .author img{
+	max-width: 32px;
+	max-height: 32px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+
+}
+.content .articles .author .info{
+	line-height: 32px;
+
+}
+.content .articles .author .info a{
+	margin:0 5px;
+	text-decoration: none;
+}
+.content .articles .author .info span{
+	color:#999;
+}
+
+/*标签样式*/
+.content .articles .params a{
+	text-decoration: none;
+	margin-right: 5px;
+	color: #999;
+}
+.content .articles .params a:hover{
+	color: #666;
+}
+.subject-tag{
+	display: inline-block;
+    padding: 3px 6px;
+    margin-top: -1px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1;
+    vertical-align: middle;
+    color: #ea6f5a!important;
+    border: 1px solid rgba(236,97,73,.7);
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: 400;
+}
+.content .articles .brief{
+	margin:8px 0;
+	max-height: 120px;
+	font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+}
+.content .articles .brief > div{
+	margin:0;
+	padding: 0px;
+}
+.content .articles .brief .brief-left.col-sm-9{
+	padding-right: 15px;
+}
+.content .articles .brief .brief-left .title{
+	margin: -7px 0 4px;
+    display: inherit;
+    font-size: 1.3em;
+    font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none;
+    color: #444;
+}
+.content .articles .brief .brief-left .title:hover{
+	color: #222;
+}
+.content .articles .brief .brief-left p{
+	margin: 0 0 8px;
+    font-size: 0.95em;
+    line-height: 24px;
+    color: #666;
+}
+.content .articles .brief .brief-right{
+	
+}
+.content .articles .brief .brief-right img{
+	width: 100%;
+	height: auto;
+	border-radius: 3px;
+}
+
+.content .Ranking{}
+.content .Ranking > a{
+	margin-bottom:5px;
+	display: block;
+}
+
+
+.img-size{
+	width:100%;
+	height: 100%;
+}
+
+/*
+
+.pager li{
+	float: left;
+	margin-right: 5px;
+}
+
+.pager li > a, .pager li > span {
+
+	 border-radius: 0px;
+}
+*/
+
+

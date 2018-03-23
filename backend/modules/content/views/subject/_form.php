@@ -25,9 +25,9 @@ use yii\widgets\ActiveForm;
         ]);  ?>
 
         <?= $form->field($model, 'type')->radioList([
-                '0' => '原创',
-                '1' => '转载',
-                '2' => '翻译',
+                '0' => '公开',
+                '1' => 'VIP',
+                '2' => '私密',
         ]) ?>
 
         <?= $form->field($model, 'status')->radioList([

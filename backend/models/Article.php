@@ -87,7 +87,7 @@ class Article extends \yii\db\ActiveRecord
             [['tag_str'], 'string', 'max' => 64],
             [['brief'], 'string', 'max' => 225],
             [['content'], 'string'],
-            [['smallimg', 'bigimg'], 'image', 'extensions' => 'png, jpg, jpeg, gif'],
+            [['smallimg', 'bigimg'], 'string'],
 
             [['isbest'], 'validBest'],
         ];
@@ -151,6 +151,11 @@ class Article extends \yii\db\ActiveRecord
     public function getSubject()
     {
         return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     /**

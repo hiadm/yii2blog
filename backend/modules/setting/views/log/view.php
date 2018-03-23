@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="box-body table-responsive no-padding">
         <?= DetailView::widget([
+            'template' => "<tr><th width='120'>{label}</th><td>{value}</td></tr>",
             'model' => $model,
             'attributes' => [
                 'id',

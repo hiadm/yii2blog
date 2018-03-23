@@ -4,19 +4,19 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
+//use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+//use frontend\models\ContactForm;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * @inheritdoc
@@ -70,10 +70,10 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    /*public function actionIndex()
     {
         return $this->render('index');
-    }
+    }*/
 
     /**
      * Logs in a user.
@@ -113,7 +113,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionContact()
+    /*public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -129,17 +129,17 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
      * Displays about page.
      *
      * @return mixed
      */
-    public function actionAbout()
+    /*public function actionAbout()
     {
         return $this->render('about');
-    }
+    }*/
 
     /**
      * Signs user up.

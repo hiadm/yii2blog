@@ -1,0 +1,56 @@
+body{
+	background-color: #F1F1F1;
+}
+.wrap{
+	width: 100%;
+	height: 575px;
+	background-color: white;
+	margin-top: 65px;
+	box-shadow: 0 0 8px rgba(0,0,0,.1);
+	border-radius: 5px;
+}
+
+.core{
+	width: 100%;
+	height: 100%;
+	/*border:1px solid red;*/
+	padding:50px;
+}
+@media (max-width: 768px) {
+	body{
+		background-color: white;
+	}
+	.core{
+		width: 320px;
+		height: 100%;
+		margin:auto;
+
+	}
+	.wrap{
+		box-shadow: none;
+	}
+}
+h4{
+	margin-bottom: 35px;
+}
+h4.title > b{
+	margin:0 25px;
+}
+h4.title a{
+	text-decoration: none;
+	color: #999;
+	font-family: 'microsoft yahei';
+	padding:5px 15px;
+}
+h4.title a.active,
+h4.title a:hover{
+	border-bottom:2px solid #EA6F5A;
+}
+h4.title a.active{
+	color: #EA6F5A;
+}
+.authorize h6{
+	font-family: 'microsoft yahei';
+	color: #bbb;
+	margin:35px auto;
+}

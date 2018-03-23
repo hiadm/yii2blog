@@ -1,0 +1,56 @@
+.content .subject-info{
+	margin-bottom:25px;
+	padding:10px 0;
+}
+.content .subject-info .test{
+	height: 100%;
+
+}
+.content .subject-tab{
+	margin-bottom:25px;
+	overflow-y: hidden;
+
+}
+.content .subject-tab ul{
+	list-style: none;
+	padding: 0;
+	overflow: hidden;
+	border-bottom: 2px solid #efefef;
+	width: 320px;
+}
+.content .subject-tab ul li{
+	float: left;
+	height: 35px;
+	border-bottom:2px solid transparent;
+	display: block;
+	padding: 0 15px;
+	line-height: 35px;
+
+}
+
+.content .subject-tab ul li:hover,
+.content .subject-tab ul li.active{
+	border-bottom:2px solid #666;
+}
+.content .subject-tab ul li > a{
+	color: #666;
+	text-decoration: none;
+
+}
+.content .subject-tab ul li > a:hover,
+.content .subject-tab ul li > a:active,
+.content .subject-tab ul li > a:visited{
+	color: #333;
+	text-decoration: none;
+}
+.content .subject-title{
+		/*font-family: ;*/
+		font-weight: 700;
+		margin-top: 10px;
+	}
+@media (max-width: 425px) {
+	.subject-title{
+		font-size: 10px;
+		margin-top: 0px;
+	}
+}

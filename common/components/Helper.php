@@ -44,4 +44,34 @@ class Helper
         }
         return $result;
     }
+
+
+    //读取文章字数
+    public static function strlen_utf8($str)
+    {
+        $i = 0;
+        $count = 0;
+        $len = strlen($str);
+        while ($i < $len)
+        {
+            $chr = ord($str[$i]);
+            $count++;
+            $i++;
+            if ($i >= $len)
+            {
+                break;
+            }
+            if ($chr & 0x80)
+            {
+                $chr <<= 1;
+                while ($chr & 0x80)
+                {
+                    $i++;
+                    $chr <<= 1;
+                }
+            }
+        }
+
+        return $count;
+    }
 }
