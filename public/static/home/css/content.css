@@ -61,6 +61,8 @@
 	color: white;
 	text-decoration: none;
 }
+
+
 .article .heart > .heart-l > ul > li:first-child > a{
 	background-color: #E9816D;
 }
@@ -81,6 +83,14 @@
 	border:1px solid #FEAE1B;
 
 }
+.article .heart > .heart-l > ul > li > a.ready:hover,
+.article .heart > .heart-l > ul > li > a.ready{
+	background-color: darkgrey;
+	/*border:2px solid gold;*/
+}
+
+
+
 .article > .comment{
 	margin: 65px 0;
 	overflow: hidden;
@@ -154,3 +164,5 @@
 .article .comment-reply > .reply-list > .reply-item{
 	margin-bottom: 25px;
 }
+
+

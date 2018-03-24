@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use common\components\Helper;
+use yii\helpers\Url;
 $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\assets\HomeAsset']);
 ?>
 
@@ -35,11 +36,11 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                                     }
                                 ?>
                                 <p>
-                                    <?= Yii::$app->formatter->asRelativeTime($article['created_at']);?>
+                                    发布 <?= Yii::$app->formatter->asRelativeTime($article['created_at']);?>,
                                     字数 <?= Helper::strlen_utf8($article['content'])?>,
-                                    阅读 <?= $article['visited']?>,
-                                    喜欢 <?= $article['favorite']?>,
-                                    收藏 <?= $article['collect']?>
+                                    阅读 <?= $article['visited']?$article['visited']:0;?>,
+                                    喜欢 <?= $article['favorite']?$article['favorite']:0;?>,
+                                    收藏 <?= $article['collect']?$article['collect']:0;?>,
                                     <span>专题 <?= Html::a($article['subject']['name'], ['subject/view', 'id'=>$article['subject']['id']])?></span>
                                 </p>
                             </div>
@@ -53,17 +54,29 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                                 <div class="heart-l pull-left">
                                     <ul>
                                         <!-- 打赏 -->
-                                        <li><a href="JavaScript:;">￥打赏｡◕‿◕｡</a></li>
+                                        <li><a href="JavaScript:void(0);">￥打赏｡◕‿◕｡</a></li>
                                         <!-- 喜欢 -->
-                                        <li><a href="JavaScript:;">♡喜欢</a></li>
+                                        <li>
+                                            <?php if($article['favorite']):?>
+                                                <a class="ready" href="JavaScript:void(0);">已喜欢</a>
+                                            <?php else:?>
+                                                <a class="favorite_btn" href="JavaScript:void(0);">♡喜欢</a>
+                                            <?php endif;?>
+                                        </li>
                                         <!-- 收藏 -->
-                                        <li><a href="JavaScript:;">+收藏</a></li>
+                                        <li>
+                                            <?php if($article['collect']):?>
+                                                <a class="ready" href="JavaScript:void(0);">已收藏</a>
+                                            <?php else:?>
+                                                <a class="collect_btn" href="JavaScript:void(0);">+收藏</a>
+                                            <?php endif;?>
+                                        </li>
                                     </ul>
 
                                 </div>
                                 <div class="heart-r pull-right">
                                     <!-- 分享 -->
-                                    <a href="JavaScript:;">分享...</a>
+                                    <a href="JavaScript:void(0);">分享...</a>
                                 </div>
                             </div>
                             <div class="nextprev">
@@ -167,4 +180,42 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
             </div>
         </div>
 </section>
+
+<?php
+$favoriteUrl = Url::to(['ajax-favorite']);
+$collectUrl = Url::to(['ajax-collect']);
+$js = <<<JS
+    //点击喜欢
+    $('.favorite_btn').on('click', function(){
+        var that = $(this);
+        if(that.text() === '♡喜欢'){
+            $.get("{$favoriteUrl}", "aid={$article['id']}", function(data){
+            if (data.errcode === 0){
+                //添加成功
+                that.addClass('ready').removeClass('favorite_btn').text('已喜欢');
+            }
+            layer.msg(data.message);
+        });
+        }
+        
+    });
+
+    //点击收藏
+    $('.collect_btn').on('click', function(){
+        var that = $(this);
+        if(that.text() === '+收藏'){
+            $.get("{$collectUrl}", "aid={$article['id']}", function(data){
+            if (data.errcode === 0){
+                //添加成功
+                that.addClass('ready').removeClass('favorite_btn').text('已收藏');
+            }
+            layer.msg(data.message);
+        });
+        }
+        
+    });
+JS;
+
+$this->registerJs($js);
+?>
 

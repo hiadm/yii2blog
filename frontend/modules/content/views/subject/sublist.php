@@ -92,6 +92,7 @@ $this->title = '专题列表';
 $getSubjects = Url::to(['/content/subject/ajax-subjects']);
 $attentionUrl = Url::to(['attention']);
 $ajaxAttention = Url::to(['ajax-attention']);
+$subjectView = Url::to(['view']);
 $js = <<<JS
     //选项卡
     $('#nav_tabs').find('li').on('click',function(){
@@ -124,14 +125,13 @@ $js = <<<JS
                  var tmp = '';
                  var data = data.data;
                  for(var item in data){
-                    
                      if(data[item]['isAttention'] === true)
                          tmp = '<a class="intry ready" href="javascript:;">已关注</a>';
                      else
                          //tmp = '<a class="intry" href="'+ "{$attentionUrl}" +'&sid='+ data[item].id +'">点击关注</a>';
                          tmp = '<a class="intry attend-btn" data-sid="'+ data[item].id +'" href="javascript:;">点击关注</a>';
                      
-                     str += '<li class="item col-xs-6 col-sm-6 col-md-4"><div class="sub-wrap"><a class="img" href="/index.php?r=content%2Fsubject%2Fview&amp;id='+data[item].id+'"><img class="img-radius-8 img-responsive" src="'+data[item].logo+'"></a><div class="cont text-center font-pretty"><h3><a class="title text-muted" href="/index.php?r=content%2Fsubject%2Findex&amp;id='+data[item].id+'">	'+data[item].name+'</a></h3><p class="text-muted">'+data[item].desc+'</p><p>'+ tmp +'</p><p class="text-muted">收录'+data[item].total+'篇文章</p></div></div></li>';
+                     str += '<li class="item col-xs-6 col-sm-6 col-md-4"><div class="sub-wrap"><a class="img" href="{$subjectView}&id='+ data[item].id +'"><img class="img-radius-8 img-responsive" src="'+data[item].logo+'"></a><div class="cont text-center font-pretty"><h3><a class="title text-muted" href="{$subjectView}&id='+ data[item].id +'">	'+data[item].name+'</a></h3><p class="text-muted">'+data[item].desc+'</p><p>'+ tmp +'</p><p class="text-muted">收录'+data[item].total+'篇文章</p></div></div></li>';
                  }
                  layer.close(index);
                  container.html(str);

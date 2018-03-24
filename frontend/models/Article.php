@@ -100,7 +100,7 @@ class Article extends ArticleModel
             ->select(['a.*','c.content'])
             ->leftJoin(['c'=>'{{%content}}'], 'c.id=a.content_id')
             ->where(['a.id'=>$id])
-            ->asArray()
+            //->asArray()
             ->one();
         return $ret;
     }
