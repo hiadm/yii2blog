@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use common\components\Helper;
 use yii\widgets\LinkPager;
 
+
 $this->registerCssFile('static/home/css/sublist.css',['depends'=>'frontend\assets\HomeAsset']);
 $this->title = '专题列表';
 ?>
@@ -61,7 +62,13 @@ $this->title = '专题列表';
                                     <a class="title text-muted" href="<?= Url::to(['view', 'id'=>$subject['id']])?>">	<?= $subject['name']?></a>
                                 </h3>
                                 <p class="text-muted"><?= Helper::truncate_utf8_string(Html::encode($subject['desc']),30)?></p>
-                                <p><a class="intry" href="subject.html">点击关注</a></p>
+                                <p>
+                                    <?php if(empty($subject['isAttention'])):?>
+                                        <a class="intry" href="<?= Url::to(['attention','sid'=>$subject['id']])?>">点击关注</a>
+                                    <?php else:?>
+                                        <a class="intry ready">已关注</a>
+                                    <?php endif;?>
+                                </p>
                                 <p class="text-muted">收录<?= $subject['total']?>篇文章</p>
                             </div>
                         </div>
@@ -82,7 +89,9 @@ $this->title = '专题列表';
 </section>
 
 <?php
-$getSubjects = \yii\helpers\Url::to(['/content/subject/ajax-subjects']);
+$getSubjects = Url::to(['/content/subject/ajax-subjects']);
+$attentionUrl = Url::to(['attention']);
+$ajaxAttention = Url::to(['ajax-attention']);
 $js = <<<JS
     //选项卡
     $('#nav_tabs').find('li').on('click',function(){
@@ -101,8 +110,8 @@ $js = <<<JS
             return false;
         //清空容器
         var container = $('#s_container');
-        container.html('<li><img style="margin:0 45%;" src="static/img/loading3.gif" /></li>');
-        
+        container.empty();
+        var index = layer.load(0, {shade: false});
         //请求专题
         $.ajax({
            type: "get",
@@ -112,10 +121,19 @@ $js = <<<JS
             if (data.errcode === 0){
                  //请求成功
                  var str = '';
+                 var tmp = '';
                  var data = data.data;
                  for(var item in data){
-                    str += '<li class="item col-xs-6 col-sm-6 col-md-4"><div class="sub-wrap"><a class="img" href="/index.php?r=content%2Fsubject%2Fview&amp;id='+data[item].id+'"><img class="img-radius-8 img-responsive" src="'+data[item].logo+'"></a><div class="cont text-center font-pretty"><h3><a class="title text-muted" href="/index.php?r=content%2Fsubject%2Findex&amp;id='+data[item].id+'">	'+data[item].name+'</a></h3><p class="text-muted">'+data[item].desc+'</p><p><a class="intry" href="#">点击关注</a></p><p class="text-muted">收录'+data[item].total+'篇文章</p></div></div></li>';
+                    
+                     if(data[item]['isAttention'] === true)
+                         tmp = '<a class="intry ready" href="javascript:;">已关注</a>';
+                     else
+                         //tmp = '<a class="intry" href="'+ "{$attentionUrl}" +'&sid='+ data[item].id +'">点击关注</a>';
+                         tmp = '<a class="intry attend-btn" data-sid="'+ data[item].id +'" href="javascript:;">点击关注</a>';
+                     
+                     str += '<li class="item col-xs-6 col-sm-6 col-md-4"><div class="sub-wrap"><a class="img" href="/index.php?r=content%2Fsubject%2Fview&amp;id='+data[item].id+'"><img class="img-radius-8 img-responsive" src="'+data[item].logo+'"></a><div class="cont text-center font-pretty"><h3><a class="title text-muted" href="/index.php?r=content%2Fsubject%2Findex&amp;id='+data[item].id+'">	'+data[item].name+'</a></h3><p class="text-muted">'+data[item].desc+'</p><p>'+ tmp +'</p><p class="text-muted">收录'+data[item].total+'篇文章</p></div></div></li>';
                  }
+                 layer.close(index);
                  container.html(str);
              }else{
                  //请求失败
@@ -125,6 +143,29 @@ $js = <<<JS
         });
         
     });
+    
+    
+    //Ajax关注专题
+    $('#s_container').on('click', 'a.attend-btn', function(){
+        var sid = $(this).data('sid');
+        var that = $(this);
+        $.get("{$ajaxAttention}", { sid: sid },
+          function(data){
+            
+            if (data.errcode === 0){
+                //关注成功
+                that.addClass('ready').removeClass('attend-btn').text('已关注');
+                
+            }
+            layer.msg(data.message);
+            
+        });
+        
+        
+    });
+    
+   
+
 JS;
 
 

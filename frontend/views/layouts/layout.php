@@ -8,8 +8,10 @@ use yii\helpers\Html;
 //use yii\bootstrap\NavBar;
 //use yii\widgets\Breadcrumbs;
 //use common\widgets\Alert;
+use frontend\assets\LayerAsset;
 use frontend\assets\HomeAsset;
 
+LayerAsset::register($this);
 HomeAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -128,7 +130,12 @@ HomeAsset::register($this);
     </div>
 </footer><!--页脚结束-->
 
+
 <?php $this->endBody() ?>
+<script>
+<?= Yii::$app->session->hasFlash('info')?"layer.msg('".Yii::$app->session->getFlash('info')."');":'';?>
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
+

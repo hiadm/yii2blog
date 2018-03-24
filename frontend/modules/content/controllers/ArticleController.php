@@ -25,6 +25,7 @@ class ArticleController extends BaseController
         $article = Article::getDetail($id);
         if (empty($article))
             throw new NotFoundHttpException('没有相关数据。');
+        //var_dump($article);die;
 
 
         //获取上一篇和下一篇

@@ -113,7 +113,7 @@ class SiteController extends BaseController
      *
      * @return mixed
      */
-    /*public function actionContact()
+    public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -129,17 +129,17 @@ class SiteController extends BaseController
                 'model' => $model,
             ]);
         }
-    }*/
+    }
 
     /**
      * Displays about page.
      *
      * @return mixed
      */
-    /*public function actionAbout()
+    public function actionAbout()
     {
         return $this->render('about');
-    }*/
+    }
 
     /**
      * Signs user up.

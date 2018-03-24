@@ -40,6 +40,7 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                                     阅读 <?= $article['visited']?>,
                                     喜欢 <?= $article['favorite']?>,
                                     收藏 <?= $article['collect']?>
+                                    <span>专题 <?= Html::a($article['subject']['name'], ['subject/view', 'id'=>$article['subject']['id']])?></span>
                                 </p>
                             </div>
                         </div>

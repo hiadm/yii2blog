@@ -22,9 +22,23 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
                         </a>
                     </div>
                     <div class="col-xs-9 col-sm-10 font-pretty">
-                        <h3 class="subject-title"><?= $subject['name']?></h3>
-                        <p class="text-muted">收录了<?= $subject['total']?>篇文章 . 123关注</p>
+                        <h3 class="subject-title">
+                            <?= $subject['name']?>
+                            <small id="is_attend">
+                                <?php if(isset($attend) && $attend==true):?>
+                                    <a href="javascript:void(0);">已关注</a>
+                                <?php else:?>
+                                    <a data-id="<?= $subject['id']?>" id="attention_btn" href="javascript:void(0);">点击关注</a>
+                                <?php endif;?>
+                            </small>
+                        </h3>
+                        <span class="text-muted">
+                            收录了<?= $subject['total']?>篇文章 .
+                            <?= $attentionNum?>个关注 .
+                            <?= $subject['status']==0?'连载中...':'完结'?> .
+                        </span>
                     </div>
+
                 </div>
 
                 <!-- 专题选项卡 -->
@@ -155,3 +169,27 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
         </div>
     </div>
 </section>
+
+<?php
+$ajaxAttention = Url::to(['ajax-attention']);
+$js = <<<JS
+    //点击关注按钮
+    $('#attention_btn').on('click', function(){
+        var sid = $(this).data('id');
+        $.get("{$ajaxAttention}", { sid: sid },
+          function(data){
+            if (data.errcode === 0){
+                //关注成功
+                $('#is_attend').html('<a href="javascript:void(0);">已关注</a>');
+                
+            }
+            //关注失败
+            layer.msg(data.message);
+            
+        });
+    });
+JS;
+
+
+$this->registerJs($js);
+?>

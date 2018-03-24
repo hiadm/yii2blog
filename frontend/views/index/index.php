@@ -55,7 +55,7 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                             foreach($subjects as $item):
                             ?>
                                 <li class="subjects">
-                                    <a href="<?= Url::to(['/content/subject/index', 'id'=>$item['id']]);?>">
+                                    <a href="<?= Url::to(['/content/subject/view', 'id'=>$item['id']]);?>">
                                         <img src="<?= $item['logo']?>">
                                         <span><?= $item['name']?></span>
 

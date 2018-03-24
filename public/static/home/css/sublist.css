@@ -78,11 +78,13 @@
 /*items*/
 .content .sublist-items{
 	padding: 0;
+	min-height: 350px;
 }
 .content .sublist-items > ul{
 	list-style: none;
 	padding: 20px 0;
 	overflow: hidden;
+
 }
 .content .sublist-items > ul > .item{
 	padding:25px 0px 75px 0px;
@@ -130,6 +132,10 @@
 	padding:10px 25px;
 	border-radius: 20px;
 	color: white;
+}
+.content .sublist-items > ul .sub-wrap .ready{
+	background-color: grey;
+
 }
 .content .sublist-items > ul .sub-wrap p{
 	margin-bottom: 15px;

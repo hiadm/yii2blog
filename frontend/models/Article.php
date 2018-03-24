@@ -95,7 +95,7 @@ class Article extends ArticleModel
      * 获取制定文章
      */
     public static function getDetail($id){
-        $ret = self::find()
+        $ret = self::find()->with('subject')
             ->alias('a')
             ->select(['a.*','c.content'])
             ->leftJoin(['c'=>'{{%content}}'], 'c.id=a.content_id')

@@ -19,7 +19,7 @@ class Subject extends SubjectModel
     }
 
     /**
-     * 获取制定类型的专题集合
+     * 获取指定类型的专题集合
      * @param string $type #获取类型
      * @return array #专题集合
      */
@@ -76,7 +76,7 @@ class Subject extends SubjectModel
 
 
     /**
-     * 获取制定专题的详细信息
+     * 获取指定专题的详细信息
      * @param int $subject_id #专题id
      * @return array|null
      */
@@ -90,6 +90,8 @@ class Subject extends SubjectModel
             ->one();
         return $ret;
     }
+
+
 
 
 }
