@@ -8,6 +8,7 @@ namespace frontend\modules\content;
 class Module extends \yii\base\Module
 {
     public $layout = '/layout';
+
     /**
      * @inheritdoc
      */

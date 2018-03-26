@@ -2,6 +2,11 @@
 use yii\helpers\Html;
 use common\components\Helper;
 use yii\helpers\Url;
+use frontend\Assets\JsmartyAsset;
+use yii\widgets\LinkPager;
+use yii\web\View;
+
+JsmartyAsset::register($this);
 $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\assets\HomeAsset']);
 ?>
 
@@ -14,9 +19,7 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                 <div class="art-cont font-pretty">
                     <div class="article">
                         <div class="title">
-                            <a class="txt-link" href="javascript:void(0);">
-                                <h2><?= Html::encode($article['title'])?></h2>
-                            </a>
+                            <h2><?= Html::encode($article['title'])?></h2>
                         </div>
                         <div class="posted">
                             <a class="photo" href="javascript:void(0);">
@@ -98,82 +101,117 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                         <div class="comment">
                             <!-- 发表评论 -->
                             <div class="row">
-                                <div class="col-xs-2 col-sm-1 posted"><a class="photo" href="#"><img src="static/home/img/photo1.jpg"></a></div>
+                                <div class="col-xs-2 col-sm-1 posted">
+                                    <a class="photo" href="javascript:void(0);">
+                                        <?php if(!Yii::$app->user->isGuest && !empty(Yii::$app->user->identity->photo)):?>
+                                            <img src="<?= Yii::$app->user->identity->photo?>">
+                                        <?php else:?>
+                                            <img src="<?= Yii::$app->params['userPhoto']?>">
+                                        <?php endif;?>
+                                    </a>
+                                </div>
                                 <div class="col-xs-10 col-sm-11">
+
+                                    <?= Html::beginForm(null, 'post',[
+                                            'id' => 'comment_form'
+                                    ]) ?>
+                                    <input type="hidden" name="aid" value="<?= $article['id']?>">
                                     <div class="textform">
-                                        <textarea class="form-control" rows="5" placeholder="说点什么吧..."></textarea>
+                                        <textarea name="content" class="form-control" rows="5" placeholder="说点什么吧..." <?= Yii::$app->user->isGuest?'disabled':''?> id="textarea"></textarea>
+
+                                        <?php if(Yii::$app->user->isGuest):?>
                                         <div class="mode">
                                             <div class="sincelogin text-center">
-                                                <a href="#">登陆</a> &nbsp; 后发表评论！
+                                                <?= Html::a('登录', Yii::$app->user->loginUrl)?> &nbsp; 后发表评论！
                                             </div>
                                         </div>
-
+                                        <?php endif;?>
                                     </div>
                                     <div class="postbtn">
                                         <span class="pull-left text-muted">Ctrl+Enter 发表</span>
                                         <span class="pull-right">
 
 			    							<input class="btn btn-link" type="reset" name="" value="取消">
-			    							<button class="btn btn-success" type="submit">发射<span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
+			    							<a id="send_btn" class="btn btn-success">发射<span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
 			    						</span>
                                     </div>
+                                    <?= Html::endForm() ?>
+
                                 </div>
                             </div>
                             <!-- 评论计数 -->
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <p class="comment-count">59条评论 </p>
+                                    <p class="comment-count"><span><?= $commentNum?></span>条评论 </p>
                                 </div>
                             </div>
                             <hr>
                             <!-- 评论列表 -->
-                            <div class="row">
-                                <div class="col-xs-12 comment-data">
-                                    <div class="comment-author">
-                                        <div class="photo pull-left"><img src="static/home/img/photo.jpg"></div>
-                                        <div class="info pull-left">
-                                            <p class="text-primary">无声告白1</p>
-                                            <p class="text-muted">4楼 · 2018.01.18 15:29</p>
+                            <div id="comment_container">
+                                <?php foreach($comments as $comment):?>
+                                <div class="row">
+                                    <div class="col-xs-12 comment-data to-name">
+                                        <div class="comment-author">
+                                            <div class="photo pull-left">
+                                                <a class="photo" href="javascript:void(0);">
+                                                    <img src="<?= empty($comment['user']['photo'])?Yii::$app->params['userPhoto']:$comment['user']['photo'];?>">
+                                                </a>
+                                            </div>
+                                            <div class="info pull-left">
+                                                <p class="text-primary"><span class="to-name"><?= $comment['user']['username']?></span></p>
+                                                <p class="text-muted"><?= date('Y-m-d H:i:s', $comment['created_at'])?></p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-str">
+                                            <p><?= Html::encode($comment['content'])?></p>
+                                        </div>
+                                        <div class="comment-zan" data-cid="<?= $comment['id']?>">
+                                            <p>
+                                                <span><a class="txt-link zan" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="zan-num"><?= $comment['likes']?></span>人赞</a></span>&nbsp;&nbsp;
+                                                <span><a class="txt-link hui" href="javascript:void(0);"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="comment-str">
-                                        <p>我是四川的，在河北上三本学校。宿舍里有河北的，他们300多分，我500.我四川小伙伴辛辛苦苦复读一年500多，我们还是上了同一所学校同一个专业，住进了同一个宿舍。他们惊讶我们分数高不值得到这学校，可我们苦笑，没有谁愿意跑这么远来。其实我想说，每一个为了高考努力彻夜奋战的人都是可爱的，每个省的考生都是一样的，没有日夜兼程，都攀不上高考这座山峰的顶端，不仅是河北，每个地方在努力拼搏的考生都很苦，都会早上四五点钟起床，凌晨入睡，两点一线，三点一线的生活他们也都经历过！</p>
+                                    <div class="col-xs-12 comment-reply">
+                                        <!-- 回复 -->
+                                        <div class="reply-list" data-cid="<?= $comment['id']?>" data-aid="<?= $article['id']?>">
+
+                                            <!-- 回复列表容器-->
+                                            <div class="replys">
+                                                <?php foreach($comment['replys'] as $reply):?>
+                                                    <div class="reply-item to-name">
+                                                        <p> <span class="text-primary to-name"><?= $reply['user']['username']?></span> : <span class="text-warning">@<?php $comment['user']['username']?></span><?= Html::encode($reply['content'])?></p>
+                                                        <p class="comment-zan">
+                                                            <?= date('Y-m-d H:i:s',$reply['created_at'])?>
+                                                            <a class="hui" href="javascript:void(0);">回复</a>
+                                                        </p>
+                                                    </div>
+                                                <?php endforeach;?>
+                                            </div>
+
+                                            <!-- 回复框-->
+                                            <div class="in-txt">
+
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="comment-zan">
-                                        <p>
-                                            <span><a class="txt-link" href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 17人赞</a></span>&nbsp;&nbsp;
-                                            <span><a class="txt-link" href="#"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
-                                        </p>
-                                    </div>
+
                                 </div>
-                                <div class="col-xs-12 comment-reply">
-                                    <!-- 回复 -->
-                                    <div class="reply-list">
-                                        <div class="reply-item">
-                                            <p> <span class="text-primary">夕夏未央</span> : <span class="text-warning">@夕夏未央</span> 河南人路过，深有体会。</p>
-                                            <p>2018.01.18 20:09  <a href="#">回复</a></p>
-                                        </div>
-                                        <div class="reply-item">
-                                            <p> <span class="text-primary">夕夏未央</span> : <span class="text-warning">@夕夏未央</span> 河南人路过，深有体会。</p>
-                                            <p>2018.01.18 20:09  <a href="#">回复</a></p>
-                                        </div>
+                                <hr>
+                                <?php endforeach;?>
 
 
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Search for...">
-                                                    <span class="input-group-btn">
-										        <button class="btn btn-default" type="button">提交</button>
-										      </span>
-                                                </div><!-- /input-group -->
-                                            </div><!-- /.col-lg-6 -->
-                                        </div><!-- /.row -->
-                                        <p class="pull-right text-muted">Ctrl+Enter 发表</p>
-                                    </div>
-                                </div>
                             </div>
+                            <!--/评论列表容器-->
 
+                            <nav aria-label="Page navigation">
+                                <?= LinkPager::widget([
+                                    'pagination' => $pagination,
+                                    'nextPageLabel' => false,
+                                    'prevPageLabel' => false,
+                                ]);?>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -184,6 +222,7 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
 <?php
 $favoriteUrl = Url::to(['ajax-favorite']);
 $collectUrl = Url::to(['ajax-collect']);
+$commitCommentUrl = Url::to(['comment/ajax-commit']);
 $js = <<<JS
     //点击喜欢
     $('.favorite_btn').on('click', function(){
@@ -214,8 +253,319 @@ $js = <<<JS
         }
         
     });
+    
+    //发送评论
+    $('#textarea').on('keydown', function(){
+        if (event.ctrlKey && event.keyCode == 13) {
+            sendComment();
+        }
+    });
+    $('#send_btn').on('click', function(){
+        sendComment();
+    });
+    
+    
+    //发送评论函数
+    function sendComment(){
+        var txtAr = $('#textarea');
+        var txtFo = $('#comment_form');
+        var txtVal = txtAr.val().trim();
+        
+        //评论容器
+        var container = $('#comment_container');
+        
+        //获取模板
+        var tplText = $('#comment-tpl').html();
+        //创建jsmart
+        var compiled = new jSmart( tplText );
+        
+        
+        
+        var count = $('.comment-count').find('span');
+        
+        if (txtVal.trim().length === 0) {
+            txtAr.focus();
+            return false;
+        }
+        $.ajax({
+           type: "POST",
+           url: "{$commitCommentUrl}",
+           data: txtFo.serialize(),
+           success: function(d){
+             if(d.errcode === 0){
+                 //提交评论成功
+                 //console.log(d.data);
+                 
+                 var res = compiled.fetch( d.data );
+                 container.prepend(res);
+                 
+                 //评论数累加
+                 count.text(parseInt(count.text()) + 1) ;
+                 txtAr.val('');
+             }
+             //消息
+             layer.msg(d.message);
+             
+             
+           }
+        });
+    }
+    
+    
+    
 JS;
 
 $this->registerJs($js);
 ?>
+<?php
+$likes = Url::to(['comment/ajax-zan']);
+$replyUrl = Url::to(['reply/ajax-commit']);
+$js2 = <<<JS
+    //评论容器
+    var container = $('#comment_container');
+
+    //评论点赞
+    container.on('click', '.comment-zan a.zan', function(){
+        var that = $(this);
+        if(that.hasClass('text-danger')){
+            return false;
+        }
+        var cid = $(this).closest('div').data('cid');
+        $.ajax({
+           type: "POST",
+           url: "{$likes}",
+           data: "cid=" + cid,
+           success: function( d ){
+             if(d.errcode === 0){
+                 //点赞成功
+                 var num = parseInt(that.find('span.zan-num').text()) + 1;
+                 that.find('span.zan-num').text(num);
+                 that.removeClass('txt-link').addClass('text-danger');
+             }else{
+                 layer.msg(d.message);
+             }
+           }
+        });
+    });
+
+    //回复框显示
+    container.on('click', '.comment-zan a.hui', function(){
+        var cid = $(this).closest('div').data('cid');
+        //获取回复容器
+        var coContainer = $(this).closest('div.row');
+        
+        //获取评论容器
+        var reContainer = coContainer.find('.reply-list');
+        
+        //获取模板
+        var tplText = $('#reply-input').html();
+        //reContainer.find('.in-txt').html(tplText);
+        
+        
+        //测试
+        var name = $(this).closest('div.to-name').find('span.to-name').text();
+        var compiled = new jSmart( tplText );
+        var res = compiled.fetch( { name:'@' + name + ' : ' } );
+        reContainer.find('.in-txt').html(res);
+        
+        
+        
+    });
+    
+    
+    //提交回复
+    container.on('click', '.reply-form button',function(){
+        //回复容器
+        var reContainer = $(this).closest('div.reply-list');
+        var inputWrap = reContainer.find('.in-txt');
+        var listWrap = reContainer.find('.replys');
+        //获取当前回复内容
+        var txt = $(this).closest('div.reply-form').find('input').val();
+        
+        if ( txt.trim().length === 0 )
+            return false;
+        
+        //文章id 和评论id
+        var aid = reContainer.data('aid');
+        var cid = reContainer.data('cid');
+        $.ajax({
+            type : 'post',
+            url  : "{$replyUrl}",
+            data : "aid="+aid+"&cid="+cid+"&txt="+txt,
+            success : function(d){
+                console.log(d);
+                if ( d.errcode === 0 ){
+                    //回复成功
+                    fillTpl(d.data, listWrap); //填充模板
+                    inputWrap.empty(); //删除输入框
+                }else{
+                    //回复失败
+                    
+                    layer.msg( d.message );
+                }
+            }
+        });
+        
+        
+        
+    });
+    
+    //填充回复消息
+    function fillTpl(d, ele){
+        var tplText = $('#reply-item').html();
+        var compiled = new jSmart( tplText );
+        var res = compiled.fetch( d );
+        ele.append(res);
+        
+    }
+
+JS;
+
+$this->registerJs($js2);
+?>
+<?php
+$ajaxPage = Url::to(['article/ajax-get-comments']);
+$pageJs = <<<JS
+    $(document).on('click','.pagination a',function(e){
+        e.preventDefault();
+        var that = $(this);
+        
+        //是否是激活状态
+        var isActive = $(this).closest('li').hasClass('active');
+        if (isActive)
+            return false;
+        
+        var page=$(this).data('page');
+        
+        $.get("{$ajaxPage}", 'page=' + page + '&aid=' + "{$article['id']}",function(d){
+            
+            var tplText = $('#comment-page').html();
+            var compiled = new jSmart( tplText );
+            var res = compiled.fetch( {comments : d.data} );
+            $('#comment_container').html(res);
+            
+            //添加高亮
+            that.closest('li').addClass('active').siblings('li').removeClass('active');
+        });
+    });
+JS;
+
+$this->registerJs($pageJs);
+?>
+<script id="comment-tpl" type="text/x-smarty-tmpl">
+    <div class="row">
+        <div class="col-xs-12 comment-data to-name">
+            <div class="comment-author">
+                <div class="photo pull-left">
+                    <a class="photo" href="javascript:void(0);">
+                        <img src="{$photo}">
+                    </a>
+                </div>
+                <div class="info pull-left">
+                    <p class="text-primary"><span class="to-name">{$username}</span></p>
+                    <p class="text-muted">{$time}</p>
+                </div>
+            </div>
+            <div class="comment-str">
+                <p>{$content}</p>
+            </div>
+            <div class="comment-zan" data-cid="{$cid}">
+                <p>
+                    <span><a class="txt-link zan" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="zan-num">0</span>人赞</a></span>&nbsp;&nbsp;
+                    <span><a class="txt-link hui" href="javascript:void(0);"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 comment-reply">
+            <!-- 回复 -->
+            <div class="reply-list">
+                <!-- 回复列表容器-->
+                <div class="replys">
+
+                </div>
+                <!--输入框-->
+                <div class="in-txt">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+</script>
+<script id="reply-input" type="text/x-smarty-tmpl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group reply-form">
+                <input value="{$name}" type="text" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">提交</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="reply-item" type="text/x-smarty-tmpl">
+    <div class="reply-item">
+        <p>
+            <span class="text-primary">{$username}</span> :
+            {$txt}
+        </p>
+        <p>
+            {$time}
+            <a class="asd" href="#">回复</a>
+        </p>
+    </div>
+</script>
+<script id="comment-page" type="text/x-smarty-tmpl">
+{foreach $comments as $i => $comment}
+    <div class="row">
+        <div class="col-xs-12 comment-data to-name">
+            <div class="comment-author">
+                <div class="photo pull-left">
+                    <a class="photo" href="javascript:void(0);">
+                        <img src="{$comment.user.photo}">
+                    </a>
+                </div>
+                <div class="info pull-left">
+                    <p class="text-primary"><span class="to-name">{$comment.user.username}</span></p>
+                    <p class="text-muted">{$comment.created_at}</p>
+                </div>
+            </div>
+            <div class="comment-str">
+                <p>{$comment.content}</p>
+            </div>
+            <div class="comment-zan" data-cid="13">
+                <p>
+                    <span><a class="txt-link zan" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="zan-num">{$comment.likes}</span>人赞</a></span>&nbsp;&nbsp;
+                    <span><a class="txt-link hui" href="javascript:void(0);"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 comment-reply">
+            <!-- 回复 -->
+            <div class="reply-list" data-cid="13" data-aid="4">
+                <!-- 回复列表容器-->
+                <div class="replys">
+                    {foreach $comment.replys as $k => $reply}
+                    <div class="reply-item to-name">
+                        <p> <span class="text-primary to-name">{$reply.user.username}</span> : {$reply.content}
+                        <p class="comment-zan">
+                            {$reply.created_at}
+                            <a class="hui" href="javascript:void(0);">回复</a>
+                        </p>
+                    </div>
+                    {foreachelse}
+                    {/foreach}
+                </div>
+                <!-- 回复框-->
+                <div class="in-txt">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{foreachelse}
+{/foreach}
+</script>
 

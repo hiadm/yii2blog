@@ -196,6 +196,9 @@ class Article extends \yii\db\ActiveRecord
 
                 $newIds = [];
                 foreach($tagArr as $item){
+                    if(empty($item))
+                        continue;
+
                     $model = new Tag();
                     $model->subject_id = $this->subject_id;
                     $model->name = $item;
@@ -306,6 +309,9 @@ class Article extends \yii\db\ActiveRecord
 
                 $newIds = [];
                 foreach($tagArr as $item){
+                    if(empty($item))
+                        continue;
+
                     $model = new Tag();
                     $model->subject_id = $this->subject_id;
                     $model->name = $item;
