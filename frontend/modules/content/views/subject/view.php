@@ -46,14 +46,14 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
                     <div>
 
                     <!-- Nav tabs -->
-                    <ul class="font-pretty font-size-12"">
-                        <li class="">
-                            <?= Html::a('<span class="glyphicon glyphicon-fire"></span> 最新发布', ['', 'type' => 'new','id'=>$subject['id']]) ?>
+                    <ul class="font-pretty font-size-12">
+                        <li class="new <?= empty($_GET['type'])||$_GET['type']=='new'?'active ':'';?>">
+                            <?= Html::a('<span class="glyphicon glyphicon-fire"></span> 所有发布', ['', 'type' => 'new','id'=>$subject['id']]) ?>
                         </li>
-                        <li class="">
+                        <li class="hot <?= !empty($_GET['type'])&&$_GET['type']=='hot'?'active ':'';?>">
                             <?= Html::a('<span class="glyphicon glyphicon-send"></span> Hot', ['', 'type' => 'hot','id'=>$subject['id']]) ?>
                         </li>
-                        <li class="">
+                        <li class="best <?= !empty($_GET['type'])&&$_GET['type']=='best'?'active ':'';?>">
                             <?= Html::a('<span class="glyphicon glyphicon-ok"></span> 精品文章', ['', 'type' => 'best','id'=>$subject['id']]) ?>
                         </li>
                     </ul>
@@ -141,6 +141,7 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
                         endforeach;
                         endif;
                         ?>
+                        <?php if(empty($articles)) echo "暂无文章";?>
                     </ul>
                 </div>
                 <nav aria-label="">
@@ -163,9 +164,26 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
                     <?= $subject['notice']?>
                     </p>
                 </div>
+
+                <!-- 云标签 -->
                 <hr>
+                <div class="cloud-tag">
+                    <div class="dl_wrap">
+                        <h4 class="dl_common_t text-muted"><span>专题标签</span>
+                        </h4>
+                        <div class="develop_c">
+                            <?php foreach($subject['tags'] as $tag):?>
+                            <a href="<?= Url::to(['', 'tid'=>$tag['id'],'id'=>$subject['id']])?>" title="<?= $tag['name']?>" class="tag"><?= $tag['name']?></a>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
 
             </div>
+
+
+
         </div>
     </div>
 </section>
@@ -188,6 +206,33 @@ $js = <<<JS
             
         });
     });
+
+
+    //标签随机色
+    $(function(){
+        var tags = $('a.tag');
+        allocateColor(tags);
+    });
+    /*随机分配颜色*/
+    function allocateColor(oList){
+        oList.each(function(index, el){
+            var randColor = changeColor();
+            $(this).css({
+                'border-color': '#'+randColor,
+                'color': '#'+randColor
+            });
+        });
+    }
+    /*生成颜色*/
+    function changeColor(){
+        var r = parseInt(Math.random() * 225);
+        var g = parseInt(Math.random() * 225);
+        var b = parseInt(Math.random() * 225);
+        var colorHex = r.toString(16) + g.toString(16) + b.toString(16);
+        return colorHex;
+    }
+    
+    
 JS;
 
 

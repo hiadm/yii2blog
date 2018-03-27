@@ -2,7 +2,10 @@
 namespace frontend\models;
 use backend\models\Article as ArticleModel;
 use yii\data\Pagination;
+use yii\db\Query;
 use yii\helpers\Url;
+use Yii;
+use yii\web\BadRequestHttpException;
 
 class Article extends ArticleModel
 {
@@ -56,14 +59,34 @@ class Article extends ArticleModel
 
     /**
      * 获取指定专题的文章
-     * @params int $subject #专题id
-     * @param string $type #搜索类型
+     * @param int $subject_id #专题id
      * @return array #文章列表和 分页对象
      */
-    public static function getSubjectArticles($subject_id, $type){
+    public static function getSubjectArticles($subject_id){
+        //获取查找类型
+        $type = Yii::$app->request->get('type');
+        if (!isset($type))
+            $type = 'new';
+
+        //是否要筛选标签
+        $tid = (int) Yii::$app->request->get('tid');
+        $aids = [];
+        if (!empty($tid) && $tid > 0){
+            $aids = self::getTagArticles($tid);
+
+        }
+
+
         $query = self::find()
             ->where(['subject_id'=>$subject_id])
             ->andWhere(['isrecycle'=>0]);
+
+        if ($type == 'best')
+            $query->andWhere(['isbest'=>1]);
+        if (!empty($tid))
+            $query->andWhere(['in', 'id', $aids]);
+
+
 
         $countQuery = clone $query;
         $count = $countQuery->count();
@@ -74,8 +97,6 @@ class Article extends ArticleModel
             $query->orderBy(['created_at'=>SORT_DESC]);
         if($type == 'hot')
             $query->orderBy(['visited'=>SORT_DESC]);
-        if ($type == 'best')
-            $query->andWhere(['isbest' => 1]);
 
         $articles = $query
             ->with('user')
@@ -144,5 +165,16 @@ class Article extends ArticleModel
             'next' => $next_article
         ];
 
+    }
+
+
+    /**
+     * 获取指定标签下所有文章id
+     */
+    public static function getTagArticles($tid){
+        return (new Query())->from('{{%article_tag}}')
+            ->select(['article_id'])
+            ->where(['tag_id'=>$tid])
+            ->column();
     }
 }

@@ -82,6 +82,7 @@ class Subject extends SubjectModel
      */
     public static function getDetail($subject_id){
         $ret = self::find()
+            ->with('tags')
             ->alias('s')
             ->leftJoin(['n'=>'{{%notice}}'],'n.id = s.notice_id')
             ->select(['s.*','n.notice'])

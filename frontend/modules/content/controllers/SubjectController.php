@@ -51,15 +51,10 @@ class SubjectController extends BaseController
         if ($id <= 0)
             throw new BadRequestHttpException('请求参数错误.');
 
-        //获取类型
-        $type = Yii::$app->request->get('type');
-        if (!isset($type))
-            $type = 'new';
 
 
         //获取专题信息
         $subject = Subject::getDetail($id);
-
 
         //如果是登陆用户获取是否已关注
         $attend = false;
@@ -73,13 +68,13 @@ class SubjectController extends BaseController
         }
 
         //获取专题关注数目
-        $attentionNum = Attention::getAttentionNul($id);
+        $attentionNum = Attention::getAttentionNum($id);
 
         if (!$subject)
             throw new NotFoundHttpException('没有相关数据。');
 
         //获取文章数据
-        $articlesData = Article::getSubjectArticles($id, $type);
+        $articlesData = Article::getSubjectArticles($id);
 
 
 

@@ -258,4 +258,23 @@ a.txt-link:visited
 }
 */
 
+/*友链*/
+.friend-link > dl {
+	padding: 5px 15px 0 0;
+}
+.friend-link dl {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+.friend-link > dl > dd {
+	display: inline-block;
+	vertical-align: top;
+}
+.friend-link dd {
+	margin-left: 0;
+}
+.friend-link > dl > dd > a {
+	padding-right: 15px;
+}
+
 

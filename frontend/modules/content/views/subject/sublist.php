@@ -77,6 +77,7 @@ $this->title = '专题列表';
                     endforeach;
                     endif;
                     ?>
+                    <?php if(empty($subjects)) echo "暂无专题";?>
                 </ul>
                 <nav aria-label="Page navigation">
                     <?= LinkPager::widget([

@@ -10,6 +10,7 @@ use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\widgets\LinkPager;
 
 class ArticleController extends BaseController
 {
@@ -192,19 +193,27 @@ class ArticleController extends BaseController
                 throw new BadRequestHttpException('传递参数错误');
 
             //获取数据
-            $comments = Self::getComments($aid, $page, true);
+            $comments = Self::getComments($aid, $page, false);
             if (empty($comments))
                 return ['errcode'=>1, 'message'=>'没有数据。'];
 
             //返回数据
             //如果没有头像使用默认头像
-            foreach($comments as $k => &$v){
+            foreach($comments['comments'] as $k => &$v){
                 if(empty($v['user']['photo'])){
                     $v['user']['photo'] = Yii::$app->params['userPhoto'];
                 }
             }
 
-            return ['errcode' => 0, 'data' => $comments];
+            return [
+                'errcode' => 0,
+                'data' => $comments['comments'],
+                'pager'=> LinkPager::widget([
+                    'pagination' => $comments['pagination'],
+                    'nextPageLabel' => false,
+                    'prevPageLabel' => false,
+                ])
+            ];
 
         }
         return false;

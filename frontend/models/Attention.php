@@ -62,7 +62,7 @@ class Attention extends ActiveRecord
     /**
      * 获取专题关注个数
      */
-    public static function getAttentionNul($subject_id){
+    public static function getAttentionNum($subject_id){
         return self::find()
             ->where(['subject_id'=>$subject_id])
             ->count();

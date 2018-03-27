@@ -64,6 +64,8 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                             <?php
                             endforeach;
                         endif;
+                        if(empty($subjects))
+                            echo '暂无专题';
                         ?>
 
                         <li>
@@ -155,9 +157,10 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                         endforeach;
                         endif;
                         ?>
+                        <?php if(empty($articles)) echo '暂无文章';?>
                     </ul>
                 </div>
-                <nav aria-label="...">
+                <nav aria-label="">
                     <?=
                     LinkPager::widget([
                         'pagination' => $pagination,
@@ -171,6 +174,7 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
 
 
             <div class="cont-right col-md-4 hidden-xs hidden-sm">
+                <!-- 快速导航 -->
                 <div class="Ranking">
                     <a href="#"><img width="100%" src="static/home/img/bar1.png"></a>
                     <a href="#"><img width="100%" src="static/home/img/bar2.png"></a>
@@ -179,6 +183,8 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                     <a href="#"><img width="100%" src="static/home/img/bar5.png"></a>
                 </div>
 
+                <!-- 二维码 -->
+                <hr>
                 <div class="media">
                     <div class="media-left media-middle">
                         <a href="#">
@@ -190,8 +196,49 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                         徽章是一个修饰性的元素，它们本身细小而并不显眼，但掺杂在其它元素中就显得尤为突出了。
                     </div>
                 </div>
+
+                <!-- 友链 -->
+                <hr>
+                <div class="friend-link fly-panel fly-link">
+                    <h4 class="dl_common_t">友情链接</h4>
+                    <dl>
+                        <dd>
+                            <a href="http://www.layui.com/" target="_blank">layui</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layer.layui.com/" target="_blank">layer</a>
+                        </dd>
+                        <dd>
+                            <a href="http://www.layui.com/" target="_blank">layui</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layer.layui.com/" target="_blank">layer</a>
+                        </dd>
+                        <dd>
+                            <a href="http://www.layui.com/" target="_blank">layui</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
+                        </dd>
+                        <dd>
+                            <a href="http://layer.layui.com/" target="_blank">layer</a>
+                        </dd>
+                    </dl>
+                </div>
+
+
+
+
+
             </div>
         </div>
     </div>
 </section>
+
 

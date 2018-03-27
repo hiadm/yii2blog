@@ -205,7 +205,7 @@ $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\asset
                             </div>
                             <!--/评论列表容器-->
 
-                            <nav aria-label="Page navigation">
+                            <nav id="pager" aria-label="Page navigation">
                                 <?= LinkPager::widget([
                                     'pagination' => $pagination,
                                     'nextPageLabel' => false,
@@ -445,7 +445,7 @@ $pageJs = <<<JS
             $('#comment_container').html(res);
             
             //添加高亮
-            that.closest('li').addClass('active').siblings('li').removeClass('active');
+            that.closest('nav#pager').html(d.pager);
         });
     });
 JS;
