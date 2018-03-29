@@ -85,6 +85,7 @@ class Article extends \yii\db\ActiveRecord
             ['tag_ids', 'safe'],
             [['title'], 'string', 'max' => 125],
             [['tag_str'], 'string', 'max' => 64],
+            [['tag_str'], 'trim'],
             [['brief'], 'string', 'max' => 225],
             [['content'], 'string'],
             [['smallimg', 'bigimg'], 'string'],

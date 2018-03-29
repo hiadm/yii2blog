@@ -3,7 +3,8 @@ namespace frontend\controllers;
 
 use frontend\models\Article;
 use frontend\models\Subject;
-use yii\helpers\VarDumper;
+use frontend\models\Friend;
+
 
 class IndexController extends BaseController
 {
@@ -13,6 +14,7 @@ class IndexController extends BaseController
      * 前台首页
      */
     public function actionIndex(){
+
         //获取首页专题列表
         $subjects = Subject::getActiveSubject();
 
@@ -21,15 +23,18 @@ class IndexController extends BaseController
 
         //获取首页文章列表
         $articleData = Article::getArticle();
-//        VarDumper::dump($articleData['articles']);
-//        die;
+
+        //获取首页友情链接
+        $friends = Friend::getFriends();
+        //var_dump($friends);die;
 
 
         return $this->render('index',[
             'subjects' => $subjects,
             'bestArticle' => $bestArticle,
             'articles' => $articleData['articles'],
-            'pagination' => $articleData['pagination']
+            'pagination' => $articleData['pagination'],
+            'friends' => $friends,
         ]);
     }
 }

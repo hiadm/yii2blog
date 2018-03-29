@@ -8,6 +8,10 @@ use yii\web\View;
 
 JsmartyAsset::register($this);
 $this->registerCssFile('static/home/css/content.css',['depends'=>'frontend\assets\HomeAsset']);
+
+$this->title = $article['title'] . ' - ' .$this->params['siteInfo']['name'];
+$this->registerMetaTag(array("name"=>"keywords","content"=>"{$article['title']},{$this->params['siteInfo']['name']}"));
+$this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief']}"));
 ?>
 
 <!-- 主体 -->

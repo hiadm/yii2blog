@@ -1,3 +1,4 @@
+body { padding-top: 70px; }
 /*重写bootstrap*/
 .container{
 	max-width: 960px;
@@ -278,3 +279,16 @@ a.txt-link:visited
 }
 
 
+/*******/
+.logo{
+	background-color: #F69581;
+	line-height: 50px;
+	text-align: center;
+}
+.logo a{
+	color: white;
+	font-size: 18px;
+	font-family: "Microsoft YaHei";
+	font-weight: 500;
+	text-decoration: none;
+}

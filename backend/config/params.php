@@ -25,5 +25,5 @@ return [
     'imageUploadRelativePath' => '../static/uploaded/', // 图片上传的path
     'imageUploadSuccessPath' => 'static/uploaded/', // 图片上传成功后，url
     //标签上限
-    'tagsLimit' => 25,
+    'tagsLimit' => 35,
 ];

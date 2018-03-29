@@ -22,7 +22,10 @@ use mdm\admin\components\Helper as MdmHelper;
             <div class="col-lg-8">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'brief')->textarea(['maxlength' => true]) ?>
+                <?= $form->field($model, 'brief')->textarea([
+                    'maxlength' => true,
+                    'rows' => 5,
+                ]) ?>
 
                 <?= $form->field($model, 'smallimg')->widget('manks\FileInput', [
                     'clientOptions' => [
@@ -92,12 +95,12 @@ use mdm\admin\components\Helper as MdmHelper;
                 <hr>
 
                 <?php
-                if(MdmHelper::checkRoute('tag/create')) {
+                //if(MdmHelper::checkRoute('tag/create')) {
                     echo $form->field($model, 'tag_str',[
                         'template' => '{label}{input}{error}<p class="text-danger">新建标签，多个用逗号分割。.</p>'
                     ])->textInput();
 
-                }
+                //}
 
                 ?>
 

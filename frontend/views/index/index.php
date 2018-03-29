@@ -6,6 +6,9 @@ use yii\helpers\Html;
 
 
 $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\HomeAsset']);
+$this->title = $this->params['siteInfo']['name'];
+$this->registerMetaTag(array("name"=>"keywords","content"=>"{$this->params['siteInfo']['keywords']}"));
+$this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['siteInfo']['description']}"));
 ?>
 
 <!-- 主体 -->
@@ -86,11 +89,11 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                         <?php if(!empty($article['smallimg'])):?>
                         <li class="items">
                             <div class="author">
-                                <a class="pull-left" href="javascript:;">
+                                <a class="pull-left" href="javascript:void(0);">
                                     <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                 </a>
                                 <div class="info pull-left">
-                                    <a href="javascript:;"><?= $article['user']['username']?></a>
+                                    <a href="javascript:void(0);"><?= $article['user']['username']?></a>
                                     <span><?= Yii::$app->formatter->asRelativeTime($article['created_at'])?></span>
                                 </div>
                                 <div class="clearfix"></div>
@@ -103,16 +106,16 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                                 <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
                             </div>
                             <div class="params">
-                                <a class="subject-tag" href="#"><?= $article['subject']['name']?></a>
-                                <a href="#">
+                                <a class="subject-tag" href="<?= Url::to(['/content/subject/view',"id"=>$article['subject']['id']])?>"><?= $article['subject']['name']?></a>
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                     <?= $article['visited']?>
                                 </a>
-                                <a href="#">
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                     <?= $article['collect']?>
                                 </a>
-                                <a href="#">
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                                     <?= $article['favorite']?>
                                 </a>
@@ -121,11 +124,11 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                         <?php else:?>
                         <li class="items">
                             <div class="author">
-                                <a class="pull-left" href="javascript:;">
+                                <a class="pull-left" href="javascript:void(0);">
                                     <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                 </a>
                                 <div class="info pull-left">
-                                    <a href="javascript:;"><?= $article['user']['username']?></a>
+                                    <a href="javascript:void(0);"><?= $article['user']['username']?></a>
                                     <span><?= Yii::$app->formatter->asRelativeTime($article['created_at'])?></span>
                                 </div>
                                 <div class="clearfix"></div>
@@ -137,16 +140,16 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                                 </div>
                             </div>
                             <div class="params">
-                                <a class="subject-tag" href="#"><?= $article['subject']['name']?></a>
-                                <a href="#">
+                                <a class="subject-tag" href="<?= Url::to(['/content/subject/view',"id"=>$article['subject']['id']])?>"><?= $article['subject']['name']?></a>
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                     <?= $article['visited']?>
                                 </a>
-                                <a href="#">
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                     <?= $article['collect']?>
                                 </a>
-                                <a href="#">
+                                <a href="javascript:void(0);">
                                     <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                                     <?= $article['favorite']?>
                                 </a>
@@ -175,19 +178,28 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
 
             <div class="cont-right col-md-4 hidden-xs hidden-sm">
                 <!-- 快速导航 -->
-                <div class="Ranking">
-                    <a href="#"><img width="100%" src="static/home/img/bar1.png"></a>
-                    <a href="#"><img width="100%" src="static/home/img/bar2.png"></a>
-                    <a href="#"><img width="100%" src="static/home/img/bar3.png"></a>
-                    <a href="#"><img width="100%" src="static/home/img/bar4.png"></a>
-                    <a href="#"><img width="100%" src="static/home/img/bar5.png"></a>
+                <!--<div class="Ranking">
+                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar1.png"></a>
+                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar2.png"></a>
+                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar3.png"></a>
+                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar4.png"></a>
+                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar5.png"></a>
+                </div>-->
+                <!-- 快速导航 -->
+                <div class="Ranking channels">
+                    <?php if(!empty($this->params['siteInfo']['fastchannel'])):?>
+                        <?php foreach($this->params['siteInfo']['fastchannel'] as $channel):?>
+                        <a class="tag" href="//<?= $channel['url']?>"><?= $channel['name']?> </a>
+                        <?php endforeach;?>
+                    <?php endif;?>
+
                 </div>
 
                 <!-- 二维码 -->
                 <hr>
                 <div class="media">
                     <div class="media-left media-middle">
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <img width="64px" class="media-object" src="static/home/img/code.png" alt="...">
                         </a>
                     </div>
@@ -202,33 +214,11 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
                 <div class="friend-link fly-panel fly-link">
                     <h4 class="dl_common_t">友情链接</h4>
                     <dl>
+                        <?php foreach($friends as $friend):?>
                         <dd>
-                            <a href="http://www.layui.com/" target="_blank">layui</a>
+                            <a href="//<?= $friend['url']?>" target="_blank"><?= $friend['name']?></a>
                         </dd>
-                        <dd>
-                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
-                        </dd>
-                        <dd>
-                            <a href="http://layer.layui.com/" target="_blank">layer</a>
-                        </dd>
-                        <dd>
-                            <a href="http://www.layui.com/" target="_blank">layui</a>
-                        </dd>
-                        <dd>
-                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
-                        </dd>
-                        <dd>
-                            <a href="http://layer.layui.com/" target="_blank">layer</a>
-                        </dd>
-                        <dd>
-                            <a href="http://www.layui.com/" target="_blank">layui</a>
-                        </dd>
-                        <dd>
-                            <a href="http://layim.layui.com/" target="_blank">LayIM</a>
-                        </dd>
-                        <dd>
-                            <a href="http://layer.layui.com/" target="_blank">layer</a>
-                        </dd>
+                        <?php endforeach;?>
                     </dl>
                 </div>
 
@@ -240,5 +230,42 @@ $this->registerCssFile('static/home/css/index.css',['depends'=>'frontend\assets\
         </div>
     </div>
 </section>
+
+
+<?php
+$js = <<<JS
+    //标签随机色
+    $(function(){
+        var tags = $('a.tag');
+        allocateColor(tags);
+    });
+    /*随机分配颜色*/
+    function allocateColor(oList){
+        oList.each(function(index, el){
+            var randColor = changeColor();
+            $(this).css({
+                'border-color': '#'+randColor,
+                'color': '#'+randColor
+            });
+        });
+        
+        
+    }
+    /*生成颜色*/
+    function changeColor(){
+        var r = parseInt(Math.random() * 225);
+        var g = parseInt(Math.random() * 225);
+        var b = parseInt(Math.random() * 225);
+        var colorHex = r.toString(16) + g.toString(16) + b.toString(16);
+        return colorHex;
+    }
+    
+    
+JS;
+
+
+$this->registerJs($js);
+?>
+
 
 

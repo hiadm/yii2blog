@@ -6,6 +6,10 @@ use yii\widgets\LinkPager;
 
 
 $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\assets\HomeAsset']);
+
+$this->title = $subject['name'] . ' - ' .$this->params['siteInfo']['name'];
+$this->registerMetaTag(array("name"=>"keywords","content"=>"{$subject['name']},{$this->params['siteInfo']['name']}"));
+$this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']}"));
 ?>
 
 <!-- 主体 -->
@@ -173,7 +177,7 @@ $this->registerCssFile('static/home/css/subject.css',['depends'=>'frontend\asset
                         </h4>
                         <div class="develop_c">
                             <?php foreach($subject['tags'] as $tag):?>
-                            <a href="<?= Url::to(['', 'tid'=>$tag['id'],'id'=>$subject['id']])?>" title="<?= $tag['name']?>" class="tag"><?= $tag['name']?></a>
+                            <a href="<?= Url::to(['', 'tid'=>$tag['id'],'id'=>$subject['id']])?>" title="<?= Html::encode($tag['name'])?>" class="tag"><?= Html::encode($tag['name'])?></a>
                             <?php endforeach;?>
                         </div>
                     </div>

@@ -6,7 +6,11 @@ use yii\widgets\LinkPager;
 
 
 $this->registerCssFile('static/home/css/sublist.css',['depends'=>'frontend\assets\HomeAsset']);
-$this->title = '专题列表';
+
+$this->title = '专题列表' . ' - ' .$this->params['siteInfo']['name'];
+$this->registerMetaTag(array("name"=>"keywords","content"=>"{$this->params['siteInfo']['name']}"));
+$this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['siteInfo']['name']} - 专题列表"));
+
 ?>
 
 <!-- 主体 -->

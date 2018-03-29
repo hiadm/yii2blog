@@ -80,11 +80,23 @@ class SeoController extends Controller
     {
         $model = Seo::findOne(1);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->store()) {
             Yii::$app->session->setFlash('info', '设置成功。');
+        }else{
+            Yii::$app->session->setFlash('info', $model->getFirstErrors());
         }
+
+        //获取快速通道 和 关注我
+        $quicks = unserialize($model->fastchannel);
+        $follows = unserialize($model->followme);
+        /*echo '<pre>';
+        print_r($follows);die;
+        echo '</pre>';*/
+
         return $this->render('update', [
             'model' => $model,
+            'quicks' => $quicks,
+            'follows' => $follows,
         ]);
     }
 

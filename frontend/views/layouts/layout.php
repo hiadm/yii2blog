@@ -10,6 +10,7 @@ use yii\helpers\Html;
 //use common\widgets\Alert;
 use frontend\assets\LayerAsset;
 use frontend\assets\HomeAsset;
+use yii\helpers\Url;
 
 LayerAsset::register($this);
 HomeAsset::register($this);
@@ -31,11 +32,14 @@ HomeAsset::register($this);
 <?php $this->beginBody() ?>
 <!-- 导航 -->
 <header class="header">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
 
         <div class="container-fluid">
-            <div class="pull-left">
-                <a href="/"><img class="logo" alt="daimajie.com" src="static/home/img/logo.png"></a>
+            <div class="pull-left logo">
+                <a href="/">
+<!--                    <img class="logo" alt="daimajie.com" src="static/home/img/logo.png">-->
+                        <?= $this->params['siteInfo']['name']?>
+                </a>
             </div>
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -56,7 +60,7 @@ HomeAsset::register($this);
                             <a href="#">首页 <span class="sr-only">(current)</span></a>
                         </li>
                         <li>
-                            <a href="#">下载APP</a>
+                            <a href="javascript:void(0);">微信公众号</a>
                         </li>
                     </ul>
                     <form class="search navbar-form navbar-left">
@@ -65,17 +69,31 @@ HomeAsset::register($this);
 
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">登陆</a></li>
-                        <!-- <li><a href="#">用户注册</a></li> -->
+                        <?php if(Yii::$app->user->isGuest):?>
+                        <li>
+                            <a href="<?= Url::to(Yii::$app->user->loginUrl)?>">登陆</a>
+                        </li>
+                        <li>
+                            <a href="#">用户注册</a>
+                        </li>
+                        <?php else:?>
+
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= Yii::$app->user->identity->username?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">个人中心</a></li>
                                 <li><a href="#">写文章</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">退出登录</a></li>
+                                <li>
+                                    <?= Html::a(
+                                        '安全退出&nbsp;<i class="glyphicon glyphicon-log-out"></i>',
+                                        ['/site/logout'],
+                                        ['data-method' => 'post']
+                                    ) ?>
+                                </li>
                             </ul>
                         </li>
+                        <?php endif;?>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -92,33 +110,32 @@ HomeAsset::register($this);
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
-                <h6>Copyright &copy;<?= Html::encode(Yii::$app->name)?></h6>
+                <h6>Copyright &copy;<?= Html::encode($this->params['siteInfo']['name'])?></h6>
                 <?= '2015-'.date('Y') ?>
             </div>
 
             <div class="col-sm-4">
                 <h6>关于我们</h6>
                 <p>
-                    中国上海/2014年8月14日 — 服务于中国及全球华人社群的领先在线媒体公司新浪公司(NASDAQ GS: SINA)今日公布了截至2014年6月30日的第二季度未经审计的财务报告。
+                    <?= $this->params['siteInfo']['about']?>
                 </p>
             </div>
 
             <div class="col-sm-2">
                 <h6>导航</h6>
                 <ul class="unstyled">
-                    <li><a href="">主页</a></li>
-                    <li><a href="">服务</a></li>
-                    <li><a href="">链接</a></li>
-                    <li><a href="">联系我们</a></li>
+                    <?php foreach ($this->params['siteInfo']['fastchannel'] as $channel):?>
+                    <li><a href="//<?= $channel['url']?>"><?= $channel['name']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
 
             <div class="col-sm-2">
                 <h6>Follow us</h6>
                 <ul class="unstyled">
-                    <li><a href="">微博</a></li>
-                    <li><a href="">微信</a></li>
-                    <li><a href="">来往</a></li>
+                    <?php foreach ($this->params['siteInfo']['followme'] as $follow):?>
+                        <li><a href="//<?= $follow['url']?>"><?= $follow['name']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
 
