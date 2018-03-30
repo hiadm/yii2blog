@@ -31,6 +31,7 @@ class Friend extends \yii\db\ActiveRecord
             [['name','url'], 'required'],
             [['name'], 'string', 'max' => 15],
             [['url'], 'string', 'max' => 64],
+            [['url'], 'url', 'defaultScheme' => 'http'],
             [['sort'], 'string', 'max' => 3],
             [['sort'], 'default', 'value' => 50],
         ];

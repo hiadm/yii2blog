@@ -189,7 +189,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                 <div class="Ranking channels">
                     <?php if(!empty($this->params['siteInfo']['fastchannel'])):?>
                         <?php foreach($this->params['siteInfo']['fastchannel'] as $channel):?>
-                        <a class="tag" href="//<?= $channel['url']?>"><?= $channel['name']?> </a>
+                        <a class="tag" href="<?= $channel['url']?>"><?= $channel['name']?> </a>
                         <?php endforeach;?>
                     <?php endif;?>
 
@@ -216,7 +216,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                     <dl>
                         <?php foreach($friends as $friend):?>
                         <dd>
-                            <a href="//<?= $friend['url']?>" target="_blank"><?= $friend['name']?></a>
+                            <a href="<?= $friend['url'];?>" target="_blank"><?= $friend['name']?></a>
                         </dd>
                         <?php endforeach;?>
                     </dl>

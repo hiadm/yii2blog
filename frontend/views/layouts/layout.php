@@ -74,7 +74,7 @@ HomeAsset::register($this);
                             <a href="<?= Url::to(Yii::$app->user->loginUrl)?>">登陆</a>
                         </li>
                         <li>
-                            <a href="#">用户注册</a>
+                            <a href="<?= Url::to(['/index/signup'])?>">用户注册</a>
                         </li>
                         <?php else:?>
 
@@ -125,7 +125,7 @@ HomeAsset::register($this);
                 <h6>导航</h6>
                 <ul class="unstyled">
                     <?php foreach ($this->params['siteInfo']['fastchannel'] as $channel):?>
-                    <li><a href="//<?= $channel['url']?>"><?= $channel['name']?></a></li>
+                    <li><a href="<?= $channel['url']?>"><?= $channel['name']?></a></li>
                     <?php endforeach;?>
                 </ul>
             </div>
@@ -134,7 +134,7 @@ HomeAsset::register($this);
                 <h6>Follow us</h6>
                 <ul class="unstyled">
                     <?php foreach ($this->params['siteInfo']['followme'] as $follow):?>
-                        <li><a href="//<?= $follow['url']?>"><?= $follow['name']?></a></li>
+                        <li><a href="<?= $follow['url']?>"><?= $follow['name']?></a></li>
                     <?php endforeach;?>
                 </ul>
             </div>

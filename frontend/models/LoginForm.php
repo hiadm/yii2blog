@@ -1,8 +1,10 @@
 <?php
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\User;
+use Gregwar\Captcha\CaptchaBuilder;
 
 /**
  * Login form
@@ -12,6 +14,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+    public $captcha;
 
     private $_user;
 
@@ -23,12 +26,30 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username', 'password', 'captcha'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            [['captcha'], 'validateCaptcha'],
         ];
+    }
+
+
+    /**
+     * 验证码验证
+     */
+    public function validateCaptcha($attribute){
+        if (!$this->hasErrors()) {
+            $session = Yii::$app->session;
+
+            if($session->get('phrase') != $this->$attribute){
+                //用户输入验证码错误
+                $this->addError($attribute, '验证码不正确。');
+            }
+            //清空验证码
+            $session->remove('phrase');
+        }
     }
 
     /**
@@ -43,7 +64,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或密码错误.');
             }
         }
     }
@@ -56,7 +77,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 7 : 0);
         }
         
         return false;
@@ -70,9 +91,19 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByUsernameOrEmail($this->username);
         }
 
         return $this->_user;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => '用户名/邮箱',
+            'password' => '密码',
+            'rememberMe' => '记住我',
+            'captcha' =>'验证码'
+        ];
     }
 }

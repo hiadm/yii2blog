@@ -65,6 +65,8 @@ class FriendController extends Controller
     {
         $model = new Friend();
 
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
