@@ -87,7 +87,7 @@ HomeAsset::register($this);
                                 <li>
                                     <?= Html::a(
                                         '安全退出&nbsp;<i class="glyphicon glyphicon-log-out"></i>',
-                                        ['/site/logout'],
+                                        ['/index/logout'],
                                         ['data-method' => 'post']
                                     ) ?>
                                 </li>
@@ -134,7 +134,7 @@ HomeAsset::register($this);
                 <h6>Follow us</h6>
                 <ul class="unstyled">
                     <?php foreach ($this->params['siteInfo']['followme'] as $follow):?>
-                        <li><a href="<?= $follow['url']?>"><?= $follow['name']?></a></li>
+                        <li><a href="$follow['url']?>"><?= $follow['name']?></a></li>
                     <?php endforeach;?>
                 </ul>
             </div>

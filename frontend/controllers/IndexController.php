@@ -12,6 +12,10 @@ use frontend\models\SignupForm;
 use Gregwar\Captcha\CaptchaBuilder;
 use yii\web\Response;
 use Gregwar\Captcha\PhraseBuilder;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+use yii\base\InvalidParamException;
+use frontend\models\ContactForm;
 
 
 class IndexController extends BaseController
@@ -48,7 +52,6 @@ class IndexController extends BaseController
         ]);
     }
 
-
     /**
      *
      */
@@ -57,7 +60,7 @@ class IndexController extends BaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'contact'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -65,7 +68,7 @@ class IndexController extends BaseController
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -134,7 +137,6 @@ class IndexController extends BaseController
         ]);
     }
 
-
     /**
      * 验证码
      */
@@ -193,12 +195,23 @@ class IndexController extends BaseController
 
             $siteInfo = $this->view->params['siteInfo']['name'];
 
-            if(self::sendMail($email, $captcha, $siteInfo)){
+            try {
+                self::sendMail($email, $captcha, $siteInfo);
+
+                return ['errcode'=>0, 'message'=>'邮件已发送'];
+            } catch(\Exception $e) {
+                throw $e;
+            } catch(\Throwable $e) {
+                throw $e;
+            }
+            return ['errcode'=>1, 'message'=>'邮件发送失败'];
+
+            /*if(self::sendMail($email, $captcha, $siteInfo)){
                 return ['errcode'=>0, 'message'=>'邮件已发送'];
             }
             else{
                 return ['errcode'=>1, 'message'=>'邮件发送失败'];
-            }
+            }*/
 
 
         }
@@ -217,5 +230,80 @@ class IndexController extends BaseController
 
         return $mail->send();
     }
+
+    /**
+     * Requests password reset.
+     *
+     * @return mixed
+     */
+    public function actionRequestPasswordReset()
+    {
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('info', '检查您的电子邮件以作进一步操作。');
+
+                return $this->redirect(['login']);
+            } else {
+                Yii::$app->session->setFlash('info', '对不起，我们无法为所提供的电子邮件地址重置密码。');
+            }
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Resets password.
+     *
+     * @param string $token
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function actionResetPassword($token)
+    {
+
+        try {
+            $model = new ResetPasswordForm($token);
+
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('info', '新密码已设置成功.');
+
+            return $this->redirect(['login']);
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Displays contact page.
+     *
+     * @return mixed
+     */
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['supportEmail'])) {
+                Yii::$app->session->setFlash('info', '感谢您联系我们。我们会尽快答复您的。');
+            } else {
+                Yii::$app->session->setFlash('info', '发送消息时出错。');
+            }
+
+            return $this->refresh();
+        } else {
+            return $this->render('contact', [
+                'model' => $model,
+            ]);
+        }
+    }
+
 
 }

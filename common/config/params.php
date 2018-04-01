@@ -1,7 +1,7 @@
 <?php
 return [
-    'adminEmail' => 'admin@daimajie.com',
-    'supportEmail' => 'support@example.com',
+    'adminEmail' => 'daimajie@qq.com',
+    'supportEmail' => 'daimajie@qq.com',
     'user.passwordResetTokenExpire' => 3600,
     'userPhoto' => 'static/home/img/photo.jpg',
 ];

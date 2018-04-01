@@ -24,8 +24,8 @@ class PasswordResetRequestForm extends Model
             ['email', 'email'],
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                //'filter' => ['status' => User::STATUS_ACTIVE],
+                'message' => '这不是一个已有用户的邮箱。'
             ],
         ];
     }
@@ -39,7 +39,7 @@ class PasswordResetRequestForm extends Model
     {
         /* @var $user User */
         $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
+            //'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
 
@@ -60,9 +60,16 @@ class PasswordResetRequestForm extends Model
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($this->email)
-            ->setSubject('Password reset for ' . Yii::$app->name)
+            ->setSubject('密码重置')
             ->send();
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'email' => '邮件地址'
+        ];
     }
 }

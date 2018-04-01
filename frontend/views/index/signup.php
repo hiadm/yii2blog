@@ -60,11 +60,13 @@ $this->title = $this->params['siteInfo']['name'] .' - '. '用户登陆';
 <?php
 $sendMail = Url::to(['/index/ajax-email-captcha']);
 $js = <<<JS
+    var keyr = null;
     $('a#basic-addon2').on('click', function(){
         //判断定时器是否存在
         
-        if(typeof keyr !== 'object')
+        if(keyr)
             return false;
+        keyr = true;
         
         var area = $(this).closest('div').find('input');
         var that = $(this);
@@ -98,9 +100,10 @@ $js = <<<JS
         
     });
 
-    var keyr = null;
+    
     function timer(that){
         clearInterval(keyr);
+        
         var txt = that.text();
         var num = 60;
         keyr = setInterval(function(){

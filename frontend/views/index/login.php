@@ -46,7 +46,7 @@ $this->title = $this->params['siteInfo']['name'] .' - '. '用户登陆';
                             <?= $form->field($model, 'rememberMe')->checkbox()?>
 
                             <?= Html::submitButton('点击登录', ['class' => 'btn btn-success']) ?>
-                            <?= Html::a('忘记密码', ['#'], ['class' => 'profile-link pull-right']) ?>
+                            <?= Html::a('忘记密码', ['request-password-reset'], ['class' => 'profile-link pull-right']) ?>
                         <?php ActiveForm::end() ?>
 
                         </div>

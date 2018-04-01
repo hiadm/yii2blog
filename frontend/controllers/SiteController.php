@@ -9,10 +9,10 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
-
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-//use frontend\models\ContactForm;
+use frontend\models\ContactForm;
+
 
 /**
  * Site controller
@@ -22,7 +22,7 @@ class SiteController extends BaseController
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'access' => [
@@ -48,7 +48,7 @@ class SiteController extends BaseController
                 ],
             ],
         ];
-    }
+    }*/
 
     /**
      * @inheritdoc
@@ -81,7 +81,7 @@ class SiteController extends BaseController
      *
      * @return mixed
      */
-    public function actionLogin()
+    /*public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -95,26 +95,26 @@ class SiteController extends BaseController
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
      * Logs out the current user.
      *
      * @return mixed
      */
-    public function actionLogout()
+    /*public function actionLogout()
     {
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
+    }*/
 
     /**
      * Displays contact page.
      *
      * @return mixed
      */
-    public function actionContact()
+ /*   public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -130,24 +130,24 @@ class SiteController extends BaseController
                 'model' => $model,
             ]);
         }
-    }
+    }*/
 
     /**
      * Displays about page.
      *
      * @return mixed
      */
-    public function actionAbout()
+    /*public function actionAbout()
     {
         return $this->render('about');
-    }
+    }*/
 
     /**
      * Signs user up.
      *
      * @return mixed
      */
-    public function actionSignup()
+    /*public function actionSignup()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
@@ -161,30 +161,30 @@ class SiteController extends BaseController
         return $this->render('signup', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Requests password reset.
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
+    /*public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', '检查您的电子邮件以作进一步操作。');
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', '对不起，我们无法为所提供的电子邮件地址重置密码。');
             }
         }
 
         return $this->render('requestPasswordResetToken', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Resets password.
@@ -193,7 +193,7 @@ class SiteController extends BaseController
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    /*public function actionResetPassword($token)
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -210,5 +210,5 @@ class SiteController extends BaseController
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-    }
+    }*/
 }

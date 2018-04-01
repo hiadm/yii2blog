@@ -8,11 +8,11 @@ use yii\helpers\Html;
 //use yii\bootstrap\NavBar;
 //use yii\widgets\Breadcrumbs;
 //use common\widgets\Alert;
-//use frontend\assets\LayerAsset;
+use frontend\assets\LayerAsset;
 use frontend\assets\HomeAsset;
 use yii\helpers\Url;
 
-//LayerAsset::register($this);
+LayerAsset::register($this);
 HomeAsset::register($this);
 $this->registerCssFile('static/home/css/signup.css',['depends'=>'frontend\assets\HomeAsset']);
 ?>
@@ -108,6 +108,9 @@ $this->registerCssFile('static/home/css/signup.css',['depends'=>'frontend\assets
 
 
 <?php $this->endBody() ?>
+<script>
+    <?= Yii::$app->session->hasFlash('info')?"layer.msg('".Yii::$app->session->getFlash('info')."');":'';?>
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
