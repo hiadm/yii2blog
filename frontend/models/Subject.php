@@ -93,6 +93,31 @@ class Subject extends SubjectModel
     }
 
 
+    /**
+     * 获取用户关注的专题
+     * @param int $user_id #用户id
+     * @return array #专题信息
+     */
+    public static function getAttentions($user_id){
+        $query = Attention::find()->where(['user_id'=>$user_id]);
+        $count = $query->count();
+
+        $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>15]);
+
+        $ret = $query->with('subject')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->orderBy(['created_at'=>SORT_DESC, 'id'=>SORT_DESC])
+            ->asArray()
+            ->all();
+        return [
+            'data' => $ret,
+            'pagination' => $pagination
+        ];
+
+    }
+
+
 
 
 }

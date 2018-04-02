@@ -52,4 +52,13 @@ class Favorite extends ActiveRecord
             ->scalar();
     }
 
+    /**
+     * 定义文章关联
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticle()
+    {
+        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+    }
+
 }

@@ -68,5 +68,14 @@ class Attention extends ActiveRecord
             ->count();
     }
 
+    /**
+     * 定义文章关联
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubject()
+    {
+        return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
+    }
+
 
 }

@@ -101,7 +101,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                             <div class="brief row">
                                 <div class="brief-left col-sm-9 col-xs-12">
                                     <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
-                                    <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),88)?></p>
+                                    <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                 </div>
                                 <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
                             </div>
@@ -136,7 +136,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                             <div class="brief row">
                                 <div class="brief-left col-xs-12">
                                     <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
-                                    <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),88)?></p>
+                                    <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                 </div>
                             </div>
                             <div class="params">
@@ -177,15 +177,6 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
 
 
             <div class="cont-right col-md-4 hidden-xs hidden-sm">
-                <!-- 快速导航 -->
-                <!--<div class="Ranking">
-                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar1.png"></a>
-                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar2.png"></a>
-                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar3.png"></a>
-                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar4.png"></a>
-                    <a href="javascript:void(0);"><img width="100%" src="static/home/img/bar5.png"></a>
-                </div>-->
-                <!-- 快速导航 -->
                 <div class="Ranking channels">
                     <?php if(!empty($this->params['siteInfo']['fastchannel'])):?>
                         <?php foreach($this->params['siteInfo']['fastchannel'] as $channel):?>

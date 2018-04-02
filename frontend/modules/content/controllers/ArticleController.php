@@ -203,8 +203,13 @@ class ArticleController extends BaseController
                 if(empty($v['user']['photo'])){
                     $v['user']['photo'] = Yii::$app->params['userPhoto'];
                 }
-            }
 
+                $v['created_at'] = date('Y-m-d H:i:s');
+                foreach ($v['replys'] as &$r){
+                    $r['created_at'] = date('Y-m-d H:i:s');
+                }
+
+            }
             return [
                 'errcode' => 0,
                 'data' => $comments['comments'],

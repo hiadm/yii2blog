@@ -51,6 +51,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                     <span>专题 <?= Html::a($article['subject']['name'], ['subject/view', 'id'=>$article['subject']['id']])?></span>
                                 </p>
                             </div>
+
                         </div>
                         <div class="data">
                             <!-- 文章内容 -->
@@ -79,11 +80,6 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                             <?php endif;?>
                                         </li>
                                     </ul>
-
-                                </div>
-                                <div class="heart-r pull-right">
-                                    <!-- 分享 -->
-                                    <a href="JavaScript:void(0);">分享...</a>
                                 </div>
                             </div>
                             <div class="nextprev">
@@ -132,11 +128,10 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                         <?php endif;?>
                                     </div>
                                     <div class="postbtn">
-                                        <span class="pull-left text-muted">Ctrl+Enter 发表</span>
                                         <span class="pull-right">
 
 			    							<input class="btn btn-link" type="reset" name="" value="取消">
-			    							<a id="send_btn" class="btn btn-success">发射<span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
+			    							<button id="send_btn" class="btn btn-success">发射<span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>
 			    						</span>
                                     </div>
                                     <?= Html::endForm() ?>
@@ -184,7 +179,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                             <div class="replys">
                                                 <?php foreach($comment['replys'] as $reply):?>
                                                     <div class="reply-item to-name">
-                                                        <p> <span class="text-primary to-name"><?= $reply['user']['username']?></span> : <span class="text-warning">@<?php $comment['user']['username']?></span><?= Html::encode($reply['content'])?></p>
+                                                        <p> <span class="text-primary to-name"><?= $reply['user']['username']?></span> : <span class="text-warning"><?php $comment['user']['username']?></span><?= Html::encode($reply['content'])?></p>
                                                         <p class="comment-zan">
                                                             <?= date('Y-m-d H:i:s',$reply['created_at'])?>
                                                             <a class="hui" href="javascript:void(0);">回复</a>
@@ -228,23 +223,36 @@ $favoriteUrl = Url::to(['ajax-favorite']);
 $collectUrl = Url::to(['ajax-collect']);
 $commitCommentUrl = Url::to(['comment/ajax-commit']);
 $js = <<<JS
+    var flag = true;
     //点击喜欢
     $('.favorite_btn').on('click', function(){
+        if(!flag)
+            return;
+        flag = false;
+        
         var that = $(this);
         if(that.text() === '♡喜欢'){
             $.get("{$favoriteUrl}", "aid={$article['id']}", function(data){
-            if (data.errcode === 0){
-                //添加成功
-                that.addClass('ready').removeClass('favorite_btn').text('已喜欢');
-            }
-            layer.msg(data.message);
-        });
+                if (data.errcode === 0){
+                    //添加成功
+                    that.addClass('ready').removeClass('favorite_btn').text('已喜欢');
+                }
+                layer.msg(data.message);
+                
+            });
+            
         }
+        setTimeout(function(){
+            flag = true;
+        },3000);
         
     });
-
     //点击收藏
     $('.collect_btn').on('click', function(){
+        if(!flag)
+            return;
+        flag = false;
+        
         var that = $(this);
         if(that.text() === '+收藏'){
             $.get("{$collectUrl}", "aid={$article['id']}", function(data){
@@ -253,27 +261,31 @@ $js = <<<JS
                 that.addClass('ready').removeClass('favorite_btn').text('已收藏');
             }
             layer.msg(data.message);
-        });
+            
+            });
+            
         }
+        setTimeout(function(){
+            flag = true;
+        },3000);
+    });
+    //发送评论
+    $('#send_btn').on('click', function(e){
+        e.preventDefault();
+        var that = $(this);
+        sendComment(that);
         
     });
-    
-    //发送评论
-    $('#textarea').on('keydown', function(){
-        if (event.ctrlKey && event.keyCode == 13) {
-            sendComment();
-        }
-    });
-    $('#send_btn').on('click', function(){
-        sendComment();
-    });
-    
-    
     //发送评论函数
-    function sendComment(){
+    function sendComment(obj){
         var txtAr = $('#textarea');
         var txtFo = $('#comment_form');
         var txtVal = txtAr.val().trim();
+        if (txtVal.trim().length === 0) {
+            txtAr.focus();
+            return false;
+        }
+        obj.attr('disabled', true);
         
         //评论容器
         var container = $('#comment_container');
@@ -283,23 +295,17 @@ $js = <<<JS
         //创建jsmart
         var compiled = new jSmart( tplText );
         
-        
-        
         var count = $('.comment-count').find('span');
         
-        if (txtVal.trim().length === 0) {
-            txtAr.focus();
-            return false;
-        }
+        
         $.ajax({
            type: "POST",
            url: "{$commitCommentUrl}",
            data: txtFo.serialize(),
            success: function(d){
+             
              if(d.errcode === 0){
                  //提交评论成功
-                 //console.log(d.data);
-                 
                  var res = compiled.fetch( d.data );
                  container.prepend(res);
                  
@@ -309,14 +315,11 @@ $js = <<<JS
              }
              //消息
              layer.msg(d.message);
-             
+             obj.attr('disabled',false);
              
            }
         });
     }
-    
-    
-    
 JS;
 
 $this->registerJs($js);
@@ -327,9 +330,13 @@ $replyUrl = Url::to(['reply/ajax-commit']);
 $js2 = <<<JS
     //评论容器
     var container = $('#comment_container');
-
+    var zan = true;
     //评论点赞
     container.on('click', '.comment-zan a.zan', function(){
+        if(!zan)
+            return;
+        zan = false;
+        
         var that = $(this);
         if(that.hasClass('text-danger')){
             return false;
@@ -348,13 +355,17 @@ $js2 = <<<JS
              }else{
                  layer.msg(d.message);
              }
+             zan = true;
            }
         });
+        setTimeout(function(){
+            zan = true;
+        },5000);
+        
     });
 
     //回复框显示
     container.on('click', '.comment-zan a.hui', function(){
-        var cid = $(this).closest('div').data('cid');
         //获取回复容器
         var coContainer = $(this).closest('div.row');
         
@@ -363,22 +374,19 @@ $js2 = <<<JS
         
         //获取模板
         var tplText = $('#reply-input').html();
-        //reContainer.find('.in-txt').html(tplText);
-        
         
         //测试
         var name = $(this).closest('div.to-name').find('span.to-name').text();
         var compiled = new jSmart( tplText );
         var res = compiled.fetch( { name:'@' + name + ' : ' } );
         reContainer.find('.in-txt').html(res);
-        
-        
-        
     });
     
-    
     //提交回复
-    container.on('click', '.reply-form button',function(){
+    container.on('click', '.reply-form button', function(){
+        var that = $(this);
+        that.attr('disabled', true);
+        
         //回复容器
         var reContainer = $(this).closest('div.reply-list');
         var inputWrap = reContainer.find('.in-txt');
@@ -397,20 +405,17 @@ $js2 = <<<JS
             url  : "{$replyUrl}",
             data : "aid="+aid+"&cid="+cid+"&txt="+txt,
             success : function(d){
-                console.log(d);
                 if ( d.errcode === 0 ){
                     //回复成功
                     fillTpl(d.data, listWrap); //填充模板
                     inputWrap.empty(); //删除输入框
                 }else{
                     //回复失败
-                    
                     layer.msg( d.message );
+                    that.attr('disabled', false);
                 }
             }
         });
-        
-        
         
     });
     
@@ -430,8 +435,14 @@ $this->registerJs($js2);
 <?php
 $ajaxPage = Url::to(['article/ajax-get-comments']);
 $pageJs = <<<JS
+    var pager = true;
     $(document).on('click','.pagination a',function(e){
         e.preventDefault();
+        
+        if(!pager)
+            return;
+        pager = false;
+        
         var that = $(this);
         
         //是否是激活状态
@@ -450,7 +461,11 @@ $pageJs = <<<JS
             
             //添加高亮
             that.closest('nav#pager').html(d.pager);
+            
         });
+        setTimeout(function(){
+            pager = true;
+        },1500);
     });
 JS;
 
@@ -474,10 +489,7 @@ $this->registerJs($pageJs);
                 <p>{$content}</p>
             </div>
             <div class="comment-zan" data-cid="{$cid}">
-                <p>
-                    <span><a class="txt-link zan" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="zan-num">0</span>人赞</a></span>&nbsp;&nbsp;
-                    <span><a class="txt-link hui" href="javascript:void(0);"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
-                </p>
+
             </div>
         </div>
         <div class="col-xs-12 comment-reply">
@@ -517,7 +529,6 @@ $this->registerJs($pageJs);
         </p>
         <p>
             {$time}
-            <a class="asd" href="#">回复</a>
         </p>
     </div>
 </script>
@@ -539,7 +550,7 @@ $this->registerJs($pageJs);
             <div class="comment-str">
                 <p>{$comment.content}</p>
             </div>
-            <div class="comment-zan" data-cid="13">
+            <div class="comment-zan" data-cid="{$comment.id}">
                 <p>
                     <span><a class="txt-link zan" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <span class="zan-num">{$comment.likes}</span>人赞</a></span>&nbsp;&nbsp;
                     <span><a class="txt-link hui" href="javascript:void(0);"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 回复</a></span>
@@ -548,7 +559,7 @@ $this->registerJs($pageJs);
         </div>
         <div class="col-xs-12 comment-reply">
             <!-- 回复 -->
-            <div class="reply-list" data-cid="13" data-aid="4">
+            <div class="reply-list" data-cid="{$comment.id}" data-aid="{$comment.article_id}">
                 <!-- 回复列表容器-->
                 <div class="replys">
                     {foreach $comment.replys as $k => $reply}
@@ -569,6 +580,7 @@ $this->registerJs($pageJs);
             </div>
         </div>
     </div>
+    <hr />
 {foreachelse}
 {/foreach}
 </script>

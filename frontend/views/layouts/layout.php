@@ -57,7 +57,7 @@ HomeAsset::register($this);
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="#">首页 <span class="sr-only">(current)</span></a>
+                            <a href="/">首页 <span class="sr-only">(current)</span></a>
                         </li>
                         <li>
                             <a href="javascript:void(0);">微信公众号</a>
@@ -81,7 +81,7 @@ HomeAsset::register($this);
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= Yii::$app->user->identity->username?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">个人中心</a></li>
+                                <li><a href="<?= Url::to(['/user/center/index'])?>">个人中心</a></li>
                                 <li><a href="#">写文章</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li>

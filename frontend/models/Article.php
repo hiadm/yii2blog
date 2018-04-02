@@ -113,7 +113,7 @@ class Article extends ArticleModel
     }
 
     /**
-     * 获取制定文章
+     * 获取指定文章
      */
     public static function getDetail($id){
         $ret = self::find()->with('subject')
@@ -176,5 +176,55 @@ class Article extends ArticleModel
             ->select(['article_id'])
             ->where(['tag_id'=>$tid])
             ->column();
+    }
+
+
+    /**
+     * 获取用户收藏的文章
+     * @param int $user_id #用户id
+     * @return array #文章数据
+     */
+    public static function getCollects($user_id){
+        $query = Collect::find()->where(['user_id'=>$user_id]);
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>15]);
+
+        $ret = $query->with(['article.user', 'article.subject'])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->orderBy(['created_at'=>SORT_DESC,'id'=>SORT_DESC])
+            ->asArray()
+            ->all();
+
+        return [
+          'data' => $ret,
+          'pagination' => $pagination
+        ];
+
+    }
+
+    /**
+     * 获取用户喜欢的文章
+     * @param int $user_id #用户id
+     * @return array #文章数据
+     */
+    public static function getLikes($user_id){
+        $query = Favorite::find()->where(['user_id'=>$user_id]);
+
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>15]);
+
+        $ret = $query->with(['article.user', 'article.subject'])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->orderBy(['created_at'=>SORT_DESC,'id'=>SORT_DESC])
+            ->asArray()
+            ->all();
+
+        return [
+            'data' => $ret,
+            'pagination' => $pagination
+        ];
     }
 }

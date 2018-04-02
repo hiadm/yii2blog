@@ -32,7 +32,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                                 <?php if(isset($attend) && $attend==true):?>
                                     <a href="javascript:void(0);">已关注</a>
                                 <?php else:?>
-                                    <a data-id="<?= $subject['id']?>" id="attention_btn" href="javascript:void(0);">点击关注</a>
+                                    <button class="btn btn-link" data-id="<?= $subject['id']?>" id="attention_btn">点击关注</button>
                                 <?php endif;?>
                             </small>
                         </h3>
@@ -86,7 +86,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                                 <div class="brief row">
                                     <div class="brief-left col-sm-9 col-xs-12">
                                         <a class="title" href="<?= Url::to(['article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
-                                        <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),88)?></p>
+                                        <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                     </div>
                                     <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
                                 </div>
@@ -121,7 +121,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                                 <div class="brief row">
                                     <div class="brief-left col-xs-12">
                                         <a class="title" href="<?= Url::to(['article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
-                                        <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),88)?></p>
+                                        <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                     </div>
                                 </div>
                                 <div class="params">
@@ -197,6 +197,8 @@ $ajaxAttention = Url::to(['ajax-attention']);
 $js = <<<JS
     //点击关注按钮
     $('#attention_btn').on('click', function(){
+        $(this).attr('disabled', true);
+        
         var sid = $(this).data('id');
         $.get("{$ajaxAttention}", { sid: sid },
           function(data){
@@ -207,7 +209,7 @@ $js = <<<JS
             }
             //关注失败
             layer.msg(data.message);
-            
+            $(this).attr('disabled', false);
         });
     });
 

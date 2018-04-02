@@ -11,7 +11,6 @@ class ReplyController extends Controller
 {
     //保存回复内容
     public function actionAjaxCommit(){
-        //echo 'asd';die;
         if (Yii::$app->request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -29,7 +28,6 @@ class ReplyController extends Controller
             if(!Reply::canCommit($aid, $cid)){
                 return ['errcode'=>1, 'message'=>'您刚刚回复过，请2分钟后在回复。'];
             }
-
 
             if ($aid <= 0 || $cid <= 0 || empty($txt))
                 throw new BadRequestHttpException('请求参数错误。');
