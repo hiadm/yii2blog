@@ -132,6 +132,9 @@ a.txt-link:visited
 
 
 /*文章列表*/
+.content{
+	min-height: 650px;
+}
 .content .articles {
 	margin-bottom:25px;
 }

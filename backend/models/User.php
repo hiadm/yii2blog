@@ -63,6 +63,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password' => '密码',
             'email' => '邮箱',
             'isvip' => 'VIP',
+            'sponsor' => '赞助码'
         ];
     }
 

@@ -3,14 +3,10 @@ namespace frontend\models;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use common\models\User;
+use backend\models\Reply as ReplyModel;
 
-class Reply extends ActiveRecord
+class Reply extends ReplyModel
 {
-    //表名
-    public static function tableName()
-    {
-        return "{{%reply}}";
-    }
 
     public function behaviors()
     {
@@ -22,10 +18,7 @@ class Reply extends ActiveRecord
         ];
     }
 
-    //定义关联
-    public function getUser(){
-        return $this->hasOne(User::className(), ['id'=>'user_id'])->select(['username','id','photo']);
-    }
+
 
     /**
      * 检测提交时间是否在安全时间

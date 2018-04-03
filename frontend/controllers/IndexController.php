@@ -221,7 +221,7 @@ class IndexController extends BaseController
     public static function sendMail ($email, $captcha ,$siteInfo)
     {
 
-        $str = "您在 <strong>{$siteInfo}</strong> 注册的验证码是 - <strong>{$captcha}</strong> 五分钟之内有效。";
+        $str = "<p  style='font-size:18px;'>您在 <strong>{$siteInfo}</strong> 注册的验证码是 - <strong>{$captcha}</strong> - 五分钟之内有效。</p>";
 
         $mail= Yii::$app->mailer->compose();
         $mail->setTo($email); //要发送给那个人的邮箱

@@ -6,6 +6,7 @@ use common\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
+use backend\models\Comment as CommentModel;
 
 /**
  * This is the model class for table "{{%comment}}".
@@ -17,15 +18,8 @@ use yii\data\Pagination;
  * @property int $likes 喜欢
  * @property string $created_at 收藏时间
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends CommentModel
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%comment}}';
-    }
 
     public function behaviors()
     {
@@ -37,15 +31,7 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
-    //定义关联
-    public function getReplys(){
-        return $this->hasMany(Reply::className(), ['comment_id'=>'id'])
-            ->with('user')
-            ->orderBy(['created_at'=>SORT_ASC]);
-    }
-    public function getUser(){
-        return $this->hasOne(User::className(), ['id'=>'user_id'])->select(['username','id','photo']);
-    }
+
 
 
     /**

@@ -6,10 +6,13 @@ use frontend\models\Attention;
 use frontend\models\Collect;
 use frontend\models\Favorite;
 use frontend\models\Subject;
+use frontend\modules\user\models\Setting;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use Yii;
 use yii\web\Response;
+use common\components\Upload as NewUpload;
+use yii\web\MethodNotAllowedHttpException;
 
 class CenterController extends BaseController
 {
@@ -21,10 +24,27 @@ class CenterController extends BaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => [
+                    'index',
+                    'cancel-collect',
+                    'cancel-likes',
+                    'cancel-attention',
+                    'reset-password',
+                    'reset-email',
+                    'reset-photo'
+                ],
                 'rules' => [
                     [
-                        'actions' => ['index', 'cancel-collect'],
+                        'actions' => [
+                            'index',
+                            'cancel-collect',
+                            'cancel-likes',
+                            'cancel-attention',
+                            'reset-password',
+                            'reset-email',
+                            'reset-photo'
+                        ],
+
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -38,6 +58,7 @@ class CenterController extends BaseController
             ],*/
         ];
     }
+
 
 
     public function actionIndex(){
@@ -174,4 +195,105 @@ class CenterController extends BaseController
         }
         return false;
     }
+
+
+    /**
+     * 修改密码
+     */
+    public function actionResetPassword(){
+        //获取个人信息
+        $user = Yii::$app->user->identity;
+
+        $model = new Setting();
+        $model->scenario = Setting::RESET_PASSOWRD;
+
+        if($model->load(Yii::$app->request->post()) && $model->store()){
+            Yii::$app->session->setFlash('info','密码重置成功。');
+            $this->refresh();
+        }
+
+
+        return $this->render('reset-password',[
+            'user' => $user,
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * 修改邮箱
+     */
+
+    public function actionResetEmail(){
+        //获取个人信息
+        $user = Yii::$app->user->identity;
+
+        $model = new Setting();
+        $model->scenario = Setting::RESET_EMAIL;
+
+        if($model->load(Yii::$app->request->post()) && $model->storeEmail()){
+            Yii::$app->session->setFlash('info','邮箱重置成功。');
+            $this->refresh();
+        }
+
+
+        return $this->render('reset-email',[
+            'user' => $user,
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * 修改头像
+     */
+    public function actionResetPhoto(){
+        //获取个人信息
+        $user = Yii::$app->user->identity;
+
+        $model = new Setting();
+        $model->scenario = Setting::SET_PHOTO;
+
+        if($model->load(Yii::$app->request->post()) && $model->savePhoto()){
+            Yii::$app->session->setFlash('info', '修改头像成功。');
+            $this->refresh();
+        }
+
+        return $this->render('reset-photo',[
+            'user' => $user,
+            'model' => $model
+        ]);
+    }
+
+
+
+    /**
+     * 上传专题图片
+     */
+    public function actionUpload(){
+        $this->enableCsrfValidation = false;
+        if(Yii::$app->request->isPost){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            try {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+
+                $model = new NewUpload();
+
+                $info = $model->upImage('photo_');
+
+                if ($info && is_array($info)) {
+                    return $info;
+                } else {
+                    return ['code' => 1, 'msg' => 'error'];
+                }
+
+            } catch (\Exception $e) {
+                return ['code' => 1, 'msg' => $e->getMessage()];
+            }
+        }
+        throw new MethodNotAllowedHttpException('请求方式不被允许。');
+
+    }
+
+    /**
+     * 订阅VIP
+     */
 }
