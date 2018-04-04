@@ -83,7 +83,7 @@ $this->registerCssFile('static/home/css/signup.css',['depends'=>'frontend\assets
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= Yii::$app->user->identity->username?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="<?= Url::to(['/user/center/index'])?>">个人中心</a></li>
-                                    <li><a href="#">写文章</a></li>
+                                    <li><a href="/admin">写文章</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li>
                                         <?= Html::a(

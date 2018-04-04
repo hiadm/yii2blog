@@ -94,6 +94,13 @@ class Subject extends \yii\db\ActiveRecord
      */
     public function store(){
         if ($this->validate()){
+            $ret = Helper::thumbImage($this->logo,280, 280);
+            if($ret)
+                $this->addError('logo','上传logo失败，请重试。');
+            $this->logo = $ret;
+
+
+
             $transaction = self::getDb()->beginTransaction();
             try {
                 //保存布告
@@ -136,6 +143,12 @@ class Subject extends \yii\db\ActiveRecord
                 //删除旧图片
                 Helper::delImage($this->getOldAttribute('logo'));
             }
+
+            $ret = Helper::thumbImage($this->logo,280, 280);
+            if($ret)
+                $this->addError('logo','上传logo失败，请重试。');
+            $this->logo = $ret;
+
 
             $transaction = self::getDb()->beginTransaction();
             try {

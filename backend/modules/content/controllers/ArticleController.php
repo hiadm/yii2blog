@@ -196,7 +196,7 @@ class ArticleController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
                 $model = new NewUpload();
-                $info = $model->upImage('article_');
+                $info = $model->upImage('tmp_');
 
                 if ($info && is_array($info)) {
                     return $info;
@@ -210,5 +210,26 @@ class ArticleController extends Controller
         }
         throw new MethodNotAllowedHttpException('请求方式不被允许。');
 
+    }
+
+
+    //编辑器上传图片
+    public function actionEditUpload(){
+        if (Yii::$app->request->isPost){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new NewUpload();
+            $info = $model->upImage();
+            if ($info && is_array($info)) {
+                return ['code' => 0, 'data' => [
+                    'src' => $info['url']
+                ]];
+            } else {
+                return ['code' => 1, 'msg' => '上传失败'];
+            }
+
+
+        }
+        throw new MethodNotAllowedHttpException('请求方式不被允许。');
     }
 }

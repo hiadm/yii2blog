@@ -18,6 +18,12 @@ class Seo extends \yii\db\ActiveRecord
     public $quicks = []; //快速通道
     public $follows = []; //关注我
 
+    public $quicks_name = []; //quicks_name[]
+    public $quicks_url = [];
+
+    public $follows_name = [];
+    public $follows_url = [];
+
     /**
      * @inheritdoc
      */
@@ -32,9 +38,15 @@ class Seo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['name'], 'string', 'max'=>5],
             [['logo', 'keywords', 'description', 'about'], 'string', 'max' => 255],
-            [['fastchannel','followme'], 'string'],
+            ['quicks_url', 'each', 'rule' => ['url','defaultScheme' => 'http']],
+            ['follows_url', 'each', 'rule' => ['url','defaultScheme' => 'http']],
+
+            [['quicks_name','quicks_url','follows_name','follows_url'], 'safe']
+
+
         ];
     }
 
@@ -71,17 +83,22 @@ class Seo extends \yii\db\ActiveRecord
      * 保存
      */
     public function store(){
-        //快速通道
-        $quicks = Yii::$app->request->post('quicks');
-        $this->fastchannel = serialize(self::operateArr($quicks, 5));
 
-        //关注我
-        $follows = Yii::$app->request->post('follows');
-        $this->followme = serialize(self::operateArr($follows, 3));
+        if(!$this->validate())
+            return false;
+
+        $this->fastchannel = serialize(self::operateArr([
+            'name' => $this->quicks_name,
+            'url'  => $this->quicks_url,
+        ], 5));
+
+        $this->followme = serialize(self::operateArr([
+            'name' => $this->follows_name,
+            'url' => $this->follows_url,
+        ], 3));
 
 
-
-        return $this->save();
+        return $this->save(false);
     }
 
     /**
@@ -90,17 +107,20 @@ class Seo extends \yii\db\ActiveRecord
     public static function operateArr($arrs, $degree){
         $tmp = [];
         $num = 0;
-        foreach ($arrs['name'] as $k => $arr){
-            if ($num >= $degree)
-                break;
+        if(!empty($arrs['name']) && !empty($arrs['url'])){
+            foreach ($arrs['name'] as $k => $arr){
+                if ($num >= $degree)
+                    break;
 
-            if(!empty($arrs['name'][$k]) && !empty($arrs['url'][$k])){
-                $tmp[$num]['name'] = $arrs['name'][$k];
-                $tmp[$num]['url'] = $arrs['url'][$k];
+                if(!empty($arrs['name'][$k]) && !empty($arrs['url'][$k])){
+                    $tmp[$num]['name'] = $arrs['name'][$k];
+                    $tmp[$num]['url'] = $arrs['url'][$k];
 
-                $num++;
+                    $num++;
+                }
             }
         }
+
         return $tmp;
     }
 }

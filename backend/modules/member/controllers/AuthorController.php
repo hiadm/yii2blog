@@ -23,6 +23,13 @@ class AuthorController extends Controller
                 //删除原有图片
                 Helper::delImage($model->getOldAttribute('sponsor'));
 
+
+                //剪切图片
+                $model->sponsor = Helper::thumbImage($model->sponsor, 280, 280);
+                if ($model->sponsor === false)
+                    $model->addError('sponsor', '上传图片失败，请重试。');
+
+
                 if($model->save()){
                     Yii::$app->session->setFlash('success', '设置赞助码成功。');
                 }else{
@@ -51,7 +58,7 @@ class AuthorController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
                 $model = new NewUpload();
-                $info = $model->upImage('sponsor_');
+                $info = $model->upImage('tmp_');
 
                 if ($info && is_array($info)) {
                     return $info;

@@ -82,7 +82,7 @@ HomeAsset::register($this);
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= Yii::$app->user->identity->username?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?= Url::to(['/user/center/index'])?>">个人中心</a></li>
-                                <li><a href="#">写文章</a></li>
+                                <li><a href="/admin">写文章</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <?= Html::a(
@@ -134,7 +134,7 @@ HomeAsset::register($this);
                 <h6>Follow us</h6>
                 <ul class="unstyled">
                     <?php foreach ($this->params['siteInfo']['followme'] as $follow):?>
-                        <li><a href="$follow['url']?>"><?= $follow['name']?></a></li>
+                        <li><a href="<?= $follow['url']?>"><?= $follow['name']?></a></li>
                     <?php endforeach;?>
                 </ul>
             </div>

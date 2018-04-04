@@ -150,7 +150,7 @@ class SubjectController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
                 $model = new NewUpload();
-                $info = $model->upImage('subject_');
+                $info = $model->upImage('tmp_');
 
                 if ($info && is_array($info)) {
                     return $info;

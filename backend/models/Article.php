@@ -80,7 +80,7 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title','brief','smallimg','type','isbest','isdraft','subject_id','content'],'required'],
+            [['title','brief','type','isbest','isdraft','subject_id','content'],'required'],
             [['subject_id','type', 'isbest', 'isdraft'], 'integer'],
             ['tag_ids', 'safe'],
             [['title'], 'string', 'max' => 125],
@@ -189,6 +189,25 @@ class Article extends \yii\db\ActiveRecord
         if (!$this->validate()){
             return false;
         }
+
+        //如果文章图片不为空
+        if (!empty($this->smallimg)){
+            $this->smallimg = Helper::thumbImage($this->smallimg,300,240);
+            if ($this->smallimg === false){
+                $this->addError('smallimg', '上传文章图片失败。');
+                return false;
+            }
+        }
+        //如果文章海报不为空
+        if (!empty($this->bigimg)){
+            $this->bigimg = Helper::thumbImage($this->bigimg,1250,540);
+            if ($this->bigimg === false){
+                $this->addError('bigimg', '上传文章图片失败。');
+                return false;
+            }
+        }
+
+
         //新建标签
         if (!empty($this->tag_str)){
             if($this->subject_id){
@@ -286,6 +305,13 @@ class Article extends \yii\db\ActiveRecord
         if($this->smallimg !== $this->getOldAttribute('smallimg')){
             //删除原有图片
             Helper::delImage($this->getOldAttribute('smallimg'));
+            //如果文章图片不为空
+            $this->smallimg = Helper::thumbImage($this->smallimg,300,240);
+            if ($this->smallimg === false){
+                $this->addError('smallimg', '上传文章图片失败。');
+                return false;
+            }
+
         }
 
         //如果上传新的文章海报 或 取消精品推荐 就删除原有图片
@@ -298,8 +324,13 @@ class Article extends \yii\db\ActiveRecord
             $this->bigimg='';
         }
 
-        if($newBigimg !== $oldBigimg){
+        if($newIsbest !== 0 && ($newBigimg !== $oldBigimg)){
             Helper::delImage($oldBigimg);
+            $this->bigimg = Helper::thumbImage($this->bigimg,1250,540);
+            if ($this->bigimg === false){
+                $this->addError('smallimg', '上传文章图片失败。');
+                return false;
+            }
         }
 
         //新建标签
@@ -358,21 +389,23 @@ class Article extends \yii\db\ActiveRecord
                 throw new \Exception('删除文章与标签关联数据失败');
 
             //保存文章与标签关联信息
-            $rel = [];
-            foreach($this->tag_ids as $id){
-                $rel[] = [
-                    'article_id' => $this->id,
-                    'tag_id' => $id
-                ];
+            if($this->tag_ids) {
+                $rel = [];
+                foreach ($this->tag_ids as $id) {
+                    $rel[] = [
+                        'article_id' => $this->id,
+                        'tag_id' => $id
+                    ];
 
+                }
+
+
+                $ret = Yii::$app->db->createCommand()
+                    ->batchInsert("{{%article_tag}}", ['article_id', 'tag_id'], $rel)
+                    ->execute();
+                if ($ret === false)
+                    throw new \Exception('保存文章标签关联数据失败.');
             }
-
-            $ret = Yii::$app->db->createCommand()
-                ->batchInsert("{{%article_tag}}", ['article_id', 'tag_id'], $rel)
-                ->execute();
-            if ($ret === false)
-                throw new \Exception('保存文章标签关联数据失败.');
-
 
 
             $transaction->commit();

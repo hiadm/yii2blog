@@ -1,5 +1,7 @@
 <?php
 namespace common\components;
+use Yii;
+use yii\imagine\Image;
 
 class Helper
 {
@@ -73,5 +75,48 @@ class Helper
         }
 
         return $count;
+    }
+
+
+    /**
+     * 剪切图片
+     * @param $file string #文件
+     * @param $width int #宽度
+     * @param $height int #高度
+     */
+    public static function thumbImage($file, $width=350, $height=350){
+        //获取上传根路径
+        $root = Yii::getAlias('@public') . '/';
+        $file = $root . $file;
+        if (!is_file($file)){
+            return false;
+        }
+
+        $dir = 'static/uploaded/'.date('Ymd') . '/';
+        $newName = time() . rand(0000,9999);
+        $ext = self::get_ext($file);
+        if(!is_dir($root . $dir)){
+            mkdir($root . $dir, true);
+        }
+
+
+        $newFile = $root . $dir . $newName . '.' . $ext;
+        $ret = Image::thumbnail($file, $width , $height)
+            ->save($newFile, ['quality' => 80]);
+
+        if ($ret){
+            @unlink($file);
+            return $dir . $newName . '.' . $ext;
+        }
+        return false;
+
+
+    }
+
+    public static function get_ext($file){
+        $tmp = parse_url($file, PHP_URL_PATH);
+        $ext = pathinfo($tmp, PATHINFO_EXTENSION);
+
+        return $ext;
     }
 }

@@ -277,7 +277,7 @@ class CenterController extends BaseController
 
                 $model = new NewUpload();
 
-                $info = $model->upImage('photo_');
+                $info = $model->upImage('tmp_');
 
                 if ($info && is_array($info)) {
                     return $info;

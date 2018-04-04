@@ -106,7 +106,8 @@ class Setting extends Model
             return false;
         }
         $user = $this->getUser();
-        $user->photo = $this->photo;
+        $user->photo = Helper::thumbImage($this->photo, 150, 150);
+//        $user->photo = $this->photo;
 
         //删除原有图片
         Helper::delImage($user->getOldAttribute('photo'));

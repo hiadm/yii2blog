@@ -1,6 +1,10 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\Article;
+use backend\models\Comment;
+use backend\models\Subject;
+use backend\models\User;
 use Yii;
 use yii\helpers\Json;
 use yii\helpers\VarDumper;
@@ -64,8 +68,37 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        
-        return $this->render('index');
+        $cache = Yii::$app->cache;
+
+        if (!$content_num = $cache->get('content_num')){
+
+            //会员个数
+            $userNum = User::find()->count();
+
+            //专题个数
+            $subjectNum = Subject::find()->count();
+
+            //帖子个数
+            $articleNum = Article::find()->count();
+
+            //评论数
+            $commentNum = Comment::find()->count();
+
+            $content_num  = [
+                'userNum' => $userNum,
+                'subjectNum' => $subjectNum,
+                'articleNum' => $articleNum,
+                'commentNum' => $commentNum,
+            ];
+
+            $cache->set('content_num',$content_num, 3600);
+        }
+
+
+
+        return $this->render('index',[
+            'content_num' => $content_num,
+        ]);
     }
 
     /**

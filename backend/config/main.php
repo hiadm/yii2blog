@@ -25,6 +25,7 @@ return [
         'setting' => [
             'class' => 'backend\modules\setting\Module',
         ],
+
     ],
     'components' => [
         'request' => [

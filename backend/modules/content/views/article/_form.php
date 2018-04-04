@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use mdm\admin\components\Helper as MdmHelper;
+use backend\assets\LayuiAsset;
+
+LayuiAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Article */
@@ -12,7 +14,6 @@ use mdm\admin\components\Helper as MdmHelper;
 
 <div class="article-form box box-primary">
     <?php $form = ActiveForm::begin([
-//        'enableClientValidation'=>false,
         'options' => [
             'onkeydown'=>"if(event.keyCode==13){return false;}"
         ],
@@ -25,6 +26,7 @@ use mdm\admin\components\Helper as MdmHelper;
                 <?= $form->field($model, 'brief')->textarea([
                     'maxlength' => true,
                     'rows' => 5,
+
                 ]) ?>
 
                 <?= $form->field($model, 'smallimg')->widget('manks\FileInput', [
@@ -113,7 +115,8 @@ use mdm\admin\components\Helper as MdmHelper;
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <?= $form->field($model, 'content')->textarea(['maxlength' => true,'rows'=>8]) ?>
+                <?= $form->field($model,'content')->textarea(['id'=>'textarea','style'=>"display: none;"]) ?>
+
                 <?= $form->field($model, 'type')->radioList([
                     '0' => '原创',
                     '1' => '转载',
@@ -131,7 +134,6 @@ use mdm\admin\components\Helper as MdmHelper;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-
 <?php
 $getSubjectUrl = Url::to(['subject/ajax-get-subjects']);
 $getTagsUrl = Url::to(['tag/ajax-get-tags']);
@@ -226,4 +228,26 @@ $this->registerJs($js);
 
 
 
+?>
+<?php
+$uploadUrl = Url::to(['edit-upload']);
+$strJs = <<<JS
+    layui.use('layedit', function(){
+      var layedit = layui.layedit;
+      
+      layedit.set({
+          uploadImage: {
+            url: "{$uploadUrl}" //接口url
+            ,type: 'post' //默认post
+          }
+        });
+      
+      
+      layedit.build('textarea',{
+          height: 380 //设置编辑器高度
+      });
+    });
+JS;
+
+$this->registerJs($strJs);
 ?>

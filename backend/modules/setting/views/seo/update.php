@@ -25,10 +25,6 @@ $this->params['breadcrumbs'][] = '设置 SEO';
                 <?= $form->field($model, 'about')->textarea(['maxlength' => true]) ?>
 
             </div>
-            <!--<div class="col-lg-6">
-                <?/*= $form->field($model, 'fastchannel')->textInput(['maxlength' => true,'placeholder'=>'专题1，专题2，专题3'])*/?>
-                <p class="text-danger">多的专题用逗号分开（如：专题1，专题2，专题3）最多选5个专题</p>
-            </div>-->
             <div class="col-lg-6 keyval">
                 <label>快速通道 </label> <i>最多可写5个</i>
                 <?php if(!empty($quicks)):?>
@@ -36,11 +32,11 @@ $this->params['breadcrumbs'][] = '设置 SEO';
                     <div class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputEmail3">name</label>
-                            <input value="<?= $quick['name']?>" name="quicks[name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="名字">
+                            <input value="<?= $quick['name']?>" name="Seo[quicks_name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="名字">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputPassword3">uel</label>
-                            <input value="<?= $quick['url']?>" name="quicks[url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
+                            <input value="<?= $quick['url']?>" name="Seo[quicks_url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
                         </div>
                         <a type="submit" class="btn btn-default plus">+</a>
                         <a type="submit" class="btn btn-default reduce">-</a>
@@ -51,11 +47,11 @@ $this->params['breadcrumbs'][] = '设置 SEO';
                     <div class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputEmail3">name</label>
-                            <input name="quicks[name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="名字">
+                            <input name="Seo[quicks_name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="名字">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputPassword3">uel</label>
-                            <input name="quicks[url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
+                            <input name="Seo[quicks_url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
                         </div>
                         <a type="submit" class="btn btn-default plus">+</a>
                         <a type="submit" class="btn btn-default reduce">-</a>
@@ -72,11 +68,11 @@ $this->params['breadcrumbs'][] = '设置 SEO';
                     <div class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputEmail3">name</label>
-                            <input value="<?= $follow['name']?>" name="follows[name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="微博">
+                            <input value="<?= $follow['name']?>" name="Seo[follows_name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="微博">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputPassword3">uel</label>
-                            <input value="<?= $follow['url']?>" name="follows[url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
+                            <input value="<?= $follow['url']?>" name="Seo[follows_url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
                         </div>
                         <a type="submit" class="btn btn-default plus">+</a>
                         <a type="submit" class="btn btn-default reduce">-</a>
@@ -87,11 +83,11 @@ $this->params['breadcrumbs'][] = '设置 SEO';
                     <div class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputEmail3">name</label>
-                            <input name="follows[name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="github">
+                            <input name="Seo[follows_name][]" type="text" class="form-control" id="exampleInputEmail3" placeholder="github">
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="exampleInputPassword3">uel</label>
-                            <input name="follows[url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
+                            <input name="Seo[follows_url][]" type="text" class="form-control" id="exampleInputPassword3" placeholder="URL">
                         </div>
                         <a type="submit" class="btn btn-default plus">+</a>
                         <a type="submit" class="btn btn-default reduce">-</a>

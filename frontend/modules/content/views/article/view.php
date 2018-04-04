@@ -56,13 +56,15 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                         <div class="data">
                             <!-- 文章内容 -->
                             <div data-note-content="" class="show-content">
-                                <?= Html::encode($article['content'])?>
+                                <?= $article['content']?>
                             </div>
                             <div class="heart">
                                 <div class="heart-l pull-left">
                                     <ul>
                                         <!-- 打赏 -->
-                                        <li><a href="JavaScript:void(0);">￥打赏｡◕‿◕｡</a></li>
+                                        <li>
+                                            <a id="sponsor" href="JavaScript:void(0);">￥打赏｡◕‿◕｡</a>
+                                        </li>
                                         <!-- 喜欢 -->
                                         <li>
                                             <?php if($article['favorite']):?>
@@ -217,6 +219,28 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
             </div>
         </div>
 </section>
+<?php
+$imgUrl = $article['user']['sponsor'];
+if(!empty($imgUrl)){
+    $content = "<img width='350' height='350' src='{$imgUrl}'/>";
+}else{
+    $content = "<p style='padding: 50px;'>暂无设置</p>";
+}
+
+$string = <<<JS
+    $('#sponsor').on('click', function(){
+        layer.open({
+          title : false,
+          type: 1,
+          skin: 'layui-layer-rim', //加上边框
+          
+          content: "{$content}"
+        });
+    });
+JS;
+$this->registerJs($string);
+
+?>
 
 <?php
 $favoriteUrl = Url::to(['ajax-favorite']);
