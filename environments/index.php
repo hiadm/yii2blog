@@ -45,14 +45,17 @@ return [
             'backend/config/main-local.php',
             'frontend/config/main-local.php',
         ],
+        'skipFiles'  => [
+            'backend/web',
+            'frontend/web',
+        ],
     ],
     'Production' => [
         'path' => 'prod',
         'setWritable' => [
             'backend/runtime',
-            'backend/web/assets',
             'frontend/runtime',
-            'frontend/web/assets',
+            'public',
         ],
         'setExecutable' => [
             'yii',

@@ -11,6 +11,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\LinkPager;
+use yii\caching\DbDependency;
 
 class ArticleController extends BaseController
 {
@@ -28,12 +29,19 @@ class ArticleController extends BaseController
             throw new BadRequestHttpException('请求参数错误。');
         }
 
+        $cache = Yii::$app->cache;
+        $article = $cache->get('article');
+        if ($article !== false){
+            //获取文章信息
+            $article = Article::getDetail($id);
+            if (empty($article))
+                throw new NotFoundHttpException('没有相关数据。');
 
+            //设置缓存
+            $dependency = new DbDependency(['sql'=>"select created_at from {{article}} where id=" . $id]);
+            $cache->set('article', $article, 3600, $dependency);
+        }
 
-        //获取文章
-        $article = Article::getDetail($id);
-        if (empty($article))
-            throw new NotFoundHttpException('没有相关数据。');
 
         //如果是登录用户判断是否已喜欢
         $article['favorite'] = false;
@@ -41,7 +49,6 @@ class ArticleController extends BaseController
         if (!Yii::$app->user->isGuest){
             $article['favorite'] = Favorite::isExists($article['id'],Yii::$app->user->getId());
             $article['collect'] = Collect::isExists($article['id'],Yii::$app->user->getId());
-
         }
 
 
@@ -65,6 +72,12 @@ class ArticleController extends BaseController
         //添加阅读次数
         $article->updateCounters(['visited'=>1]);
 
+        $visible = [
+            'vipArticle' => $article['subject']['type'] === 1,
+            'isLogin' => !Yii::$app->user->isGuest,
+            'vipUser' => Yii::$app->user->isGuest ? false : Yii::$app->user->identity->isvip,
+
+        ];
 
 
 
@@ -77,6 +90,7 @@ class ArticleController extends BaseController
             'comments' => $comments,
             'pagination' => $pagination,
             'commentNum' => $commentNum,
+            'visible' => $visible,
         ]);
     }
 

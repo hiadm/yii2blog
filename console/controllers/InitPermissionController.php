@@ -159,6 +159,10 @@ class InitPermissionController extends Controller
         $auth->addChild($author, $ajaxGetSubjects);
         $auth->addChild($author, $ajaxGetTags);
 
+        //作者中心
+        $authorCenter = $auth->getPermission('/member/author/*');
+        $auth->addChild($author, $authorCenter);
+
         //创建作者角色
         $authorRole = $auth->createRole('作者');
         $auth->add($authorRole);

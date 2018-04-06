@@ -39,6 +39,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                                 <?= Html::a('<span class="glyphicon glyphicon-ok"></span>已完结', ['', 'type' => 'finished']) ?>
                             </li>
                         </ul>
+
                     </div>
                     <div class="col-md-6">
                         <div class="input-group" id="search_subject">

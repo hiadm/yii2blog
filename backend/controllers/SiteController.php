@@ -6,6 +6,7 @@ use backend\models\Comment;
 use backend\models\Subject;
 use backend\models\User;
 use Yii;
+use yii\db\Query;
 use yii\helpers\Json;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
@@ -68,6 +69,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+
         $cache = Yii::$app->cache;
 
         if (!$content_num = $cache->get('content_num')){

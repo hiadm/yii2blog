@@ -56,7 +56,24 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                         <div class="data">
                             <!-- 文章内容 -->
                             <div data-note-content="" class="show-content">
-                                <?= $article['content']?>
+
+                                <?php
+                                    //如果不是vip专题的文章 或者 你是vip用户
+                                    if(!$visible['vipArticle'] || ($visible['isLogin'] && $visible['vipUser'])){
+
+                                        echo $article['content'];
+                                    }else{
+                                        if($visible['isLogin'])
+                                            echo '<div class="well well-lg text-danger">您还不是vip用户 不能查看此内容</div>';
+                                        else{
+                                            echo '<div class="well well-lg">请先<a href="'.Url::to(Yii::$app->user->loginUrl) .'"> 登录</a></div>';
+                                        }
+                                    }
+
+
+
+
+                                ?>
                             </div>
                             <div class="heart">
                                 <div class="heart-l pull-left">

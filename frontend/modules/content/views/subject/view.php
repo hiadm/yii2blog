@@ -37,6 +37,10 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                             </small>
                         </h3>
                         <span class="text-muted">
+                            <?php
+                                $tmp = ['普通专题', 'VIP专题', '私密专题'];
+                                echo '<span class="text-danger">' . $tmp[$subject['type']] . '</span>';
+                            ?> .
                             收录了<?= $subject['total']?>篇文章 .
                             <?= $attentionNum?>个关注 .
                             <?= $subject['status']==0?'连载中...':'完结'?> .

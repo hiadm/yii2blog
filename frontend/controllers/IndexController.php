@@ -22,6 +22,15 @@ class IndexController extends BaseController
 {
     public $layout = 'layout2';
 
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+
 
     /**
      * 前台首页
