@@ -136,7 +136,7 @@ class SubjectController extends BaseController
     public function actionAttention(){
         //判断是否登录
         if (Yii::$app->user->isGuest){
-            Yii::$app->user->loginRequired();
+            return $this->redirect(['/index/login']);
         }
         //获取专题id 判断数据类型
         $sid = (int) Yii::$app->request->get('sid');

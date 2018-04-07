@@ -124,18 +124,30 @@ HomeAsset::register($this);
             <div class="col-sm-2">
                 <h6>导航</h6>
                 <ul class="unstyled">
-                    <?php foreach ($this->params['siteInfo']['fastchannel'] as $channel):?>
+                    <?php
+                    if(is_array($this->params['siteInfo']['fastchannel'])):
+                    foreach ($this->params['siteInfo']['fastchannel'] as $channel):
+                        ?>
                     <li><a href="<?= $channel['url']?>"><?= $channel['name']?></a></li>
-                    <?php endforeach;?>
+                    <?php
+                    endforeach;
+                    endif;
+                    ?>
                 </ul>
             </div>
 
             <div class="col-sm-2">
                 <h6>Follow us</h6>
                 <ul class="unstyled">
-                    <?php foreach ($this->params['siteInfo']['followme'] as $follow):?>
+                    <?php
+                    if(is_array($this->params['siteInfo']['followme'])):
+                    foreach ($this->params['siteInfo']['followme'] as $follow):
+                        ?>
                         <li><a href="<?= $follow['url']?>"><?= $follow['name']?></a></li>
-                    <?php endforeach;?>
+                    <?php
+                    endforeach;
+                    endif;
+                    ?>
                 </ul>
             </div>
 

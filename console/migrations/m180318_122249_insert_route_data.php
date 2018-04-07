@@ -916,6 +916,15 @@ DATA;*/
     "updated_at": null
 },
 {
+    "name": "/content/article/edit-upload",
+    "type": "2",
+    "description": null,
+    "rule_name": null,
+    "data": null,
+    "created_at": null,
+    "updated_at": null
+},
+{
     "name": "/content/comment/*",
     "type": "2",
     "description": null,

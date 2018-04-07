@@ -30,8 +30,8 @@ class ArticleController extends BaseController
         }
 
         $cache = Yii::$app->cache;
-        $article = $cache->get('article');
-        if ($article !== false){
+        $article = $cache->get(['article', $id]);
+        if ($article === false){
             //获取文章信息
             $article = Article::getDetail($id);
             if (empty($article))
@@ -39,7 +39,7 @@ class ArticleController extends BaseController
 
             //设置缓存
             $dependency = new DbDependency(['sql'=>"select created_at from {{article}} where id=" . $id]);
-            $cache->set('article', $article, 3600, $dependency);
+            $cache->set(['article', $id], $article, 3600, $dependency);
         }
 
 
