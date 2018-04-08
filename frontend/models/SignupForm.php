@@ -25,14 +25,14 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => '该用户名已经存在.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => '该邮箱已经被占用.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -55,15 +55,13 @@ class SignupForm extends Model
             $captchaInfo = $session->get('emailCaptcha');
 
             //验证时间
-            if ((time() - $captchaInfo['timeout']) > 300){
-                $this->addError($attribute, '验证码已超时。');
-            }
-
-            if($captchaInfo['captcha'] !== $this->$attribute){
+            if (
+				empty($captchaInfo) || 
+				((time() - $captchaInfo['timeout']) > 300) ||
+				($captchaInfo['captcha'] !== $this->$attribute)
+			){
                 $this->addError($attribute, '验证码错误。');
             }
-            //删除验证码
-            //$session->remove('emailCaptcha');
         }
     }
 

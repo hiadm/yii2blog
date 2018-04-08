@@ -41,7 +41,7 @@ class CommentController extends Controller
 
             if($comment->save()){
                 return ['errcode'=>0, 'message'=>'提交评论成功','data'=>[
-                    'photo' => !empty(Yii::$app->user->photo)?Yii::$app->user->photo:Yii::$app->params['userPhoto'],
+                    'photo' => !empty(Yii::$app->user->identity->photo)?Yii::$app->user->identity->photo:Yii::$app->params['userPhoto'],
                     'username' => Yii::$app->user->identity->username,
                     'time' => '刚刚',
                     'content' => Html::encode($content),

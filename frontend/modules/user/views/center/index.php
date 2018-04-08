@@ -85,7 +85,7 @@ $this->title = $this->params['siteInfo']['name'] . ' 个人中心';
                                         </div>
                                         <div class="brief row">
                                             <div class="brief-left col-sm-9 col-xs-12">
-                                                <a class="title" href="<?= Url::to(['/content/article/view', 'id'=>$article['article']['id']])?>"><?= Html::encode($article['article']['title'])?></a>
+                                                <a class="title" href="<?= Url::to(['/content/article/view', 'id'=>$article['article']['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['article']['title']),22)?></a>
                                                 <p><?= Helper::truncate_utf8_string(Html::encode($article['article']['brief']),80)?></p>
                                             </div>
                                             <div class="brief-right col-sm-3 hidden-xs">
@@ -129,7 +129,7 @@ $this->title = $this->params['siteInfo']['name'] . ' 个人中心';
                                         </div>
                                         <div class="brief row">
                                             <div class="brief-left col-xs-12">
-                                                <a class="title" href="<?= Url::to(['/content/article/view', 'id'=>$article['article']['id']])?>"><?= Html::encode($article['article']['title'])?></a>
+                                                <a class="title" href="<?= Url::to(['/content/article/view', 'id'=>$article['article']['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['article']['title']),22)?></a>
                                                 <p><?= Helper::truncate_utf8_string(Html::encode($article['article']['brief']),80)?></p>
                                             </div>
                                         </div>

@@ -100,7 +100,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                             </div>
                             <div class="brief row">
                                 <div class="brief-left col-sm-9 col-xs-12">
-                                    <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
+                                    <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['title']),22)?></a>
                                     <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                 </div>
                                 <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
@@ -135,7 +135,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                             </div>
                             <div class="brief row">
                                 <div class="brief-left col-xs-12">
-                                    <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Html::encode($article['title'])?></a>
+                                    <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['title']),22)?></a>
                                     <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                 </div>
                             </div>

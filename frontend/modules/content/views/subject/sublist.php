@@ -141,12 +141,13 @@ $js = <<<JS
                      
                      str += '<li class="item col-xs-6 col-sm-6 col-md-4"><div class="sub-wrap"><a class="img" href="{$subjectView}&id='+ data[item].id +'"><img class="img-radius-8 img-responsive" src="'+data[item].logo+'"></a><div class="cont text-center font-pretty"><h3><a class="title text-muted" href="{$subjectView}&id='+ data[item].id +'">	'+data[item].name+'</a></h3><p class="text-muted">'+data[item].desc+'</p><p>'+ tmp +'</p><p class="text-muted">收录'+data[item].total+'篇文章</p></div></div></li>';
                  }
-                 layer.close(index);
+                 
                  container.html(str);
              }else{
                  //请求失败
                  container.html(data.message);
              }
+			 layer.close(index);
              that.attr('disabled', false);
            }
         });
