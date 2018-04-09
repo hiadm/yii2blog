@@ -109,13 +109,13 @@ class ArticleController extends BaseController
 
             //判断是否登陆
             if (Yii::$app->user->isGuest){
-                return ['errcode'=>0, 'message'=>'请先登录，再做此操作。'];
+                return ['errcode'=>1, 'message'=>'请先登录，再做此操作。'];
             }
 
             //判断是否已经添加喜欢
             $uid = Yii::$app->user->getId();
             if (Favorite::isExists($aid, $uid)){
-                return ['errcode'=>0, 'message'=>'已经添加喜欢，不要重复提交。'];
+                return ['errcode'=>1, 'message'=>'已经添加喜欢，不要重复提交。'];
             }
 
             //保存数据
@@ -148,13 +148,13 @@ class ArticleController extends BaseController
 
             //判断是否登陆
             if (Yii::$app->user->isGuest){
-                return ['errcode'=>0, 'message'=>'请先登录，再做此操作。'];
+                return ['errcode'=>1, 'message'=>'请先登录，再做此操作。'];
             }
 
             //判断是否已经添加喜欢
             $uid = Yii::$app->user->getId();
             if (Collect::isExists($aid, $uid)){
-                return ['errcode'=>0, 'message'=>'已经添加收藏，不要重复提交。'];
+                return ['errcode'=>1, 'message'=>'已经添加收藏，不要重复提交。'];
             }
 
             //保存数据

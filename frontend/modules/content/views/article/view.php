@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use common\components\Helper;
 use yii\helpers\Url;
-use frontend\Assets\JsmartyAsset;
+use frontend\assets\JsmartyAsset;
 use yii\widgets\LinkPager;
 use yii\web\View;
 
@@ -274,6 +274,7 @@ $js = <<<JS
         var that = $(this);
         if(that.text() === '♡喜欢'){
             $.get("{$favoriteUrl}", "aid={$article['id']}", function(data){
+                console.log(data);
                 if (data.errcode === 0){
                     //添加成功
                     that.addClass('ready').removeClass('favorite_btn').text('已喜欢');

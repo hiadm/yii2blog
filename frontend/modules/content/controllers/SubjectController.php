@@ -98,7 +98,7 @@ class SubjectController extends BaseController
 
             $name = Yii::$app->request->get('name');
             if (empty($name))
-                return ['errcode' => '1', 'message' => '请求参数错误.'];
+                return ['errcode' => 1, 'message' => '请求参数错误.'];
 
             $subjects = Subject::SearchSubjects($name);
 

@@ -209,7 +209,7 @@ class CenterController extends BaseController
 
         if($model->load(Yii::$app->request->post()) && $model->store()){
             Yii::$app->session->setFlash('info','密码重置成功。');
-            $this->refresh();
+            //$this->refresh();
         }
 
 
@@ -232,7 +232,7 @@ class CenterController extends BaseController
 
         if($model->load(Yii::$app->request->post()) && $model->storeEmail()){
             Yii::$app->session->setFlash('info','邮箱重置成功。');
-            $this->refresh();
+            //$this->refresh();
         }
 
 

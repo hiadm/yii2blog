@@ -108,10 +108,10 @@ $this->registerCssFile('static/home/css/signup.css',['depends'=>'frontend\assets
 
 
 <?php $this->endBody() ?>
-<script>
-    <?= Yii::$app->session->hasFlash('info')?"layer.msg('".Yii::$app->session->getFlash('info')."');":'';?>
-</script>
 </body>
 </html>
 <?php $this->endPage() ?>
+<script>
+    <?= Yii::$app->session->hasFlash('info')?"layer.msg('".Yii::$app->session->getFlash('info')."');":'';?>
+</script>
 
