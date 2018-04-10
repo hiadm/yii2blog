@@ -19,7 +19,7 @@ class m180315_032645_create_notice_table extends Migration
 
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey()->unsigned()->comment('主键'),
-            'notice' => $this->text()->notNull()->defaultValue('')->comment('布告'),
+            'notice' => $this->text()->notNull()->comment('布告'),
         ], $tableOptions);
 
     }

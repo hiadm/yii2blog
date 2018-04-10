@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 ?>
-<div class="cont-right col-md-4 hidden-xs hidden-sm">
+<div class="cont-right col-md-4">
     <div class="notice font-pretty">
         <h4 class="text-muted">个人设置</h4>
         <p>

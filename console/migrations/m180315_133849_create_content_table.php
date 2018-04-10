@@ -19,7 +19,7 @@ class m180315_133849_create_content_table extends Migration
 
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey()->unsigned()->comment('主键ID'),
-            'content' => $this->text()->notNull()->defaultValue('')->comment('文章内容'),
+            'content' => $this->text()->notNull()->comment('文章内容'),
         ], $tableOptions);
 
 

@@ -2,6 +2,7 @@
 namespace common\components;
 use Yii;
 use yii\imagine\Image;
+use yii\helpers\FileHelper;
 
 class Helper
 {
@@ -93,6 +94,11 @@ class Helper
         }
 
         $dir = 'static/uploaded/'.date('Ymd') . '/';
+        if (!is_dir($root . $dir)) {
+            FileHelper::createDirectory($root . $dir);
+        }
+
+
         $newName = time() . rand(0000,9999);
         $ext = self::get_ext($file);
         if(!is_dir($root . $dir)){

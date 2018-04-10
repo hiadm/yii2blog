@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="subject-form box box-primary">
     <?php $form = ActiveForm::begin([
         'options' => [
-            'onkeydown'=>"if(event.keyCode==13){return false;}"
+            //'onkeydown'=>"if(event.keyCode==13){return false;}"
         ],
     ]); ?>
     <div class="box-body table-responsive">
@@ -39,7 +39,10 @@ use yii\widgets\ActiveForm;
                 '1' => '已完结'
         ]) ?>
 
-        <?= $form->field($model, 'notice')->textarea() ?>
+        <?= $form->field($model, 'notice')->textarea([
+                'rows' => 8,
+
+        ]) ?>
 
     </div>
     <div class="box-footer">

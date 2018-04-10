@@ -50,10 +50,12 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                     收藏 <?= $article['collect']?$article['collect']:0;?>,
                                     <span>专题 <?= Html::a($article['subject']['name'], ['subject/view', 'id'=>$article['subject']['id']])?></span>
                                 </p>
+
                             </div>
 
                         </div>
                         <div class="data">
+                            <div class="clearfix"></div>
                             <!-- 文章内容 -->
                             <div data-note-content="" class="show-content">
 

@@ -176,7 +176,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
             </div>
 
 
-            <div class="cont-right col-md-4 hidden-xs hidden-sm">
+            <div class="cont-right col-md-4">
                 <div class="Ranking channels">
                     <?php if($this->params['siteInfo']['fastchannel']):?>
                         <?php foreach($this->params['siteInfo']['fastchannel'] as $channel):?>

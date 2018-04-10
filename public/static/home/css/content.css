@@ -18,6 +18,7 @@
 	float: left;
 	line-height: 24px;
 	padding-top:4px;
+	display: inline-block;
 }
 .posted > .name > .type{
 	padding:3px 8px;
@@ -50,16 +51,26 @@
 }
 .article .heart > .heart-l > ul > li{
 	float: left;
-	margin-right: 10px;
+	margin-right: 8px;
 }
 .article .heart > .heart-l > ul > li > a,
 .article .heart > .heart-r > a{
 	display: block;
 	background-color: #42C02E;
-	padding:8px 28px;
+	padding:6px 25px;
 	border-radius: 40px;
 	color: white;
 	text-decoration: none;
+}
+
+
+@media screen and (max-width: 450px) {
+	.article .heart > .heart-l > ul > li > a,
+	.article .heart > .heart-r > a{
+		padding:5px 15px;
+		border-radius: 15px;
+		font-size: 12px;
+	}
 }
 
 

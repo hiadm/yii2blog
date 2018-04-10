@@ -33,9 +33,10 @@ return [
         'path' => 'dev',
         'setWritable' => [
             'backend/runtime',
-            'backend/web/assets',
             'frontend/runtime',
-            'frontend/web/assets',
+            'public/assets',
+            'public/admin/assets',
+            'public/static/uploaded',
         ],
         'setExecutable' => [
             'yii',
@@ -55,7 +56,9 @@ return [
         'setWritable' => [
             'backend/runtime',
             'frontend/runtime',
-            'public',
+            'public/assets',
+            'public/admin/assets',
+            'public/static/uploaded',
         ],
         'setExecutable' => [
             'yii',

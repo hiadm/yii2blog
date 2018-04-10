@@ -9,7 +9,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="article-search btn-flat pull-right">
-
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',

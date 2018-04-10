@@ -15,7 +15,7 @@ LayuiAsset::register($this);
 <div class="article-form box box-primary">
     <?php $form = ActiveForm::begin([
         'options' => [
-            'onkeydown'=>"if(event.keyCode==13){return false;}"
+            //'onkeydown'=>""
         ],
     ]); ?>
     <div class="box-body table-responsive">

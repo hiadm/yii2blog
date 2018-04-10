@@ -21,7 +21,7 @@ class m180324_123756_create_comment_table extends Migration
             'id' => $this->primaryKey()->unsigned()->comment('主键'),
             'user_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('用户id'),
             'article_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('文章id'),
-            'content' => $this->text()->notNull()->defaultValue('')->comment('评论内容'),
+            'content' => $this->text()->notNull()->comment('评论内容'),
             'likes' => $this->integer()->notNull()->defaultValue(0)->comment('喜欢'),
             'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('收藏时间'),
         ], $tableOptions);

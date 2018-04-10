@@ -12,7 +12,7 @@ use yii\helpers\Url;
 <div class="tag-form box box-primary">
     <?php $form = ActiveForm::begin([
         'options' => [
-            'onkeydown'=>"if(event.keyCode==13){return false;}"
+
         ],
     ]); ?>
     <div class="box-body table-responsive">

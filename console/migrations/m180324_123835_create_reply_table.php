@@ -22,7 +22,7 @@ class m180324_123835_create_reply_table extends Migration
             'user_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('用户id'),
             'article_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('文章id'),
             'comment_id' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('评论id'),
-            'content' => $this->text()->notNull()->defaultValue('')->comment('回复内容'),
+            'content' => $this->text()->notNull()->comment('回复内容'),
             'created_at' => $this->integer()->unsigned()->notNull()->defaultValue(0)->comment('收藏时间'),
         ], $tableOptions);
 

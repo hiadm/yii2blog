@@ -20,7 +20,7 @@ use yii\helpers\Html;
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="javascript:;">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                        <img src="/<?= empty(Yii::$app->user->identity->photo)? Yii::$app->params['userPhoto'] : Yii::$app->user->identity->photo;?>" class="user-image" alt="User Image"/>
                         <span class="hidden-xs"><?= \Yii::$app->user->identity->username?></span>
                     </a>
                 </li>
