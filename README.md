@@ -1,60 +1,108 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+#yii2blog 安装
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+##基于yii2框架的一个多用户博客系统 后台rbac权限控制 包含打赏功能 和vip会员功能
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+###1.下载程序
+```
+#先克隆程序到本地
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
-
-DIRECTORY STRUCTURE
--------------------
+git clone https://github.com/daimajie/yii2blog.git
 
 ```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
+
+###2.安装依赖包
 ```
+#进入程序目录 执行composer 命令安装依赖
+
+composer install
+
+```
+
+###3.执行初始化命令
+```
+#window下执行如下命令
+    
+    init.bat  # 选择1 生产模式 选择yes生成文件
+
+#linux 下执行如下命令 如果没有权限记得给个权限
+	
+    chmod 755 init
+	./init #同样选择1 及yes
+
+```
+
+###4.配置本地数据
+```
+#common/config/目录下的  main-local.php和params-local.php
+#main-local.php 中配置数据库信息和邮件
+		
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=DbName', #数据库地址和名字
+            'username' => 'root',  #用户名
+            'password' => '***',  #数据库密码
+            'charset' => 'utf8',
+        ],
+        
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+            'useFileTransport' => false,
+
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.qq.com', #可选其他服务商 如163 126
+                // 邮箱登录帐号
+                'username' => 'XXXXXX@XX.com',
+                // 如果是qq邮箱，这里要填写第三方授权码，而不是你的qq登录密码，参考qq邮箱的帮助文档
+                'password' => '******',
+                'port' => '25',
+                'encryption' => 'tls',
+            ],
+            'messageConfig'=>[
+                'charset'=>'UTF-8',
+                'from'=>['XXXXXX@XX.com'=>'站点名字']
+            ],
+
+			
+			
+#params-local.php 中配置一个站点url即可
+    	
+        'domain' => 'http://www.site.com/',
+
+```
+
+
+###5.初始化数据
+```
+#在此我们使用yii2的迁移工具
+
+    
+    #1.在项目根目录命令执行窗口执行如下命令
+	
+    ./yii migrate
+	
+	
+    
+    #2.初始化权限数据
+	
+    ./yii init-permission/permission
+	
+	
+	
+    #3.创建后台管理员和 作者 按提示输入名字 密码 邮箱即可
+	
+    ./yii init-manager/manager  #创建管理员
+	
+	
+    ./yii init-manager/author   #创建作者
+		
+	
+```
+
+###6.站点测试 
+    www.site.com 前台界面
+    www.site.com/admin  后台界面
+
+账户和密码是刚刚创建的
