@@ -59,6 +59,7 @@ return [
             'public/assets',
             'public/admin/assets',
             'public/static/uploaded',
+            'public/static/article',
         ],
         'setExecutable' => [
             'yii',

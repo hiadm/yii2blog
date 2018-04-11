@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use backend\assets\LayuiAsset;
+use backend\assets\UeditorAsset;
 
-LayuiAsset::register($this);
+UeditorAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Article */
@@ -115,7 +115,11 @@ LayuiAsset::register($this);
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <?= $form->field($model,'content')->textarea(['id'=>'textarea','style'=>"display: none;"]) ?>
+
+                <?= $form->field($model,'content')->textarea([
+                    'id'=>'myEditor',
+                    'style' => 'height:550px',
+                ]) ?>
 
                 <?= $form->field($model, 'type')->radioList([
                     '0' => '原创',
@@ -230,23 +234,8 @@ $this->registerJs($js);
 
 ?>
 <?php
-$uploadUrl = Url::to(['edit-upload']);
 $strJs = <<<JS
-    layui.use('layedit', function(){
-      var layedit = layui.layedit;
-      
-      layedit.set({
-          uploadImage: {
-            url: "{$uploadUrl}" //接口url
-            ,type: 'post' //默认post
-          }
-        });
-      
-      
-      layedit.build('textarea',{
-          height: 380 //设置编辑器高度
-      });
-    });
+    var um = UM.getEditor('myEditor');
 JS;
 
 $this->registerJs($strJs);

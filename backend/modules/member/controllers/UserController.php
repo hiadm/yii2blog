@@ -3,7 +3,7 @@
 namespace backend\modules\member\controllers;
 
 use Yii;
-use backend\models\user;
+use backend\models\User;
 use backend\models\SearchUser;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
