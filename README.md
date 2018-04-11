@@ -1,9 +1,9 @@
-#yii2blog 安装
+# yii2blog 安装
 
 
-##基于yii2框架的一个多用户博客系统 后台rbac权限控制 包含打赏功能 和vip会员功能
+## 基于yii2框架的一个多用户博客系统 后台rbac权限控制 包含打赏功能 和vip会员功能
 
-###1.下载程序
+### 1.下载程序
 ```
 #先克隆程序到本地
 
@@ -11,7 +11,7 @@ git clone https://github.com/daimajie/yii2blog.git
 
 ```
 
-###2.安装依赖包
+### 2.安装依赖包
 ```
 #进入程序目录 执行composer 命令安装依赖
 
@@ -19,20 +19,20 @@ composer install
 
 ```
 
-###3.执行初始化命令
+### 3.执行初始化命令
 ```
 #window下执行如下命令
     
     init.bat  # 选择1 生产模式 选择yes生成文件
 
 #linux 下执行如下命令 如果没有权限记得给个权限
-	
+    
     chmod 755 init
 	./init #同样选择1 及yes
 
 ```
 
-###4.配置本地数据
+### 4.配置本地数据
 ```
 #common/config/目录下的  main-local.php和params-local.php
 #main-local.php 中配置数据库信息和邮件
@@ -74,7 +74,7 @@ composer install
 ```
 
 
-###5.初始化数据
+### 5.初始化数据
 ```
 #在此我们使用yii2的迁移工具
 
@@ -101,7 +101,7 @@ composer install
 	
 ```
 
-###6.站点测试 
+### 6.站点测试 
     www.site.com 前台界面
     www.site.com/admin  后台界面
 
