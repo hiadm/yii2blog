@@ -22,7 +22,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                 <div class="subject-info row">
                     <div class="col-xs-3 col-sm-2 test">
                         <a href="#">
-                            <img class="img-responsive img-radius-5" src="<?= $subject['logo']?>">
+                            <img class="img-responsive img-radius-5" src="/<?= $subject['logo']?>">
                         </a>
                     </div>
                     <div class="col-xs-9 col-sm-10 font-pretty">
@@ -79,7 +79,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                             <li class="items">
                                 <div class="author">
                                     <a class="pull-left" href="javascript:;">
-                                        <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
+                                        <img class="img-responsive" src="/<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                     </a>
                                     <div class="info pull-left">
                                         <a href="javascript:;"><?= $article['user']['username']?></a>
@@ -92,7 +92,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                                         <a class="title" href="<?= Url::to(['article/view','id'=>$article['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['title']), 22)?></a>
                                         <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                     </div>
-                                    <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
+                                    <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="/<?= $article['smallimg']?>"></div>
                                 </div>
                                 <div class="params">
                                     <a class="subject-tag" href="#"><?= $subject['name']?></a>
@@ -114,7 +114,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$subject['desc']
                             <li class="items">
                                 <div class="author">
                                     <a class="pull-left" href="javascript:;">
-                                        <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
+                                        <img class="img-responsive" src="/<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                     </a>
                                     <div class="info pull-left">
                                         <a href="javascript:;"><?= $article['user']['username']?></a>

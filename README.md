@@ -28,7 +28,7 @@ composer install
 #linux 下执行如下命令 如果没有权限记得给个权限
     
     chmod 755 init
-	./init #同样选择1 及yes
+    ./init #同样选择1 及yes
 
 ```
 
@@ -64,12 +64,11 @@ composer install
                 'charset'=>'UTF-8',
                 'from'=>['XXXXXX@XX.com'=>'站点名字']
             ],
-
-			
+        ]	
 			
 #params-local.php 中配置一个站点url即可
     	
-        'domain' => 'http://www.site.com/',
+        'domain' => 'http://www.domain.com/',
 
 ```
 
@@ -102,7 +101,7 @@ composer install
 ```
 
 ### 6.站点测试 
-    www.site.com 前台界面
-    www.site.com/admin  后台界面
+    www.domain.com 前台界面
+    www.domain.com/admin  后台界面
 
 账户和密码是刚刚创建的

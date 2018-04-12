@@ -27,7 +27,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                         </div>
                         <div class="posted">
                             <a class="photo" href="javascript:void(0);">
-                                <img src="<?= !empty($user['photo'])?$user['photo']:$this->params['userPhoto']?>">
+                                <img src="/<?= !empty($user['photo'])?$user['photo']:$this->params['userPhoto']?>">
                             </a>
                             <div class="name text-muted">
                                 <a href="#"><?= $user['username']?></a>
@@ -125,9 +125,9 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                 <div class="col-xs-2 col-sm-1 posted">
                                     <a class="photo" href="javascript:void(0);">
                                         <?php if(!Yii::$app->user->isGuest && !empty(Yii::$app->user->identity->photo)):?>
-                                            <img src="<?= Yii::$app->user->identity->photo?>">
+                                            <img src="/<?= Yii::$app->user->identity->photo?>">
                                         <?php else:?>
-                                            <img src="<?= Yii::$app->params['userPhoto']?>">
+                                            <img src="/<?= Yii::$app->params['userPhoto']?>">
                                         <?php endif;?>
                                     </a>
                                 </div>
@@ -174,7 +174,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$article['brief'
                                         <div class="comment-author">
                                             <div class="photo pull-left">
                                                 <a class="photo" href="javascript:void(0);">
-                                                    <img src="<?= empty($comment['user']['photo'])?Yii::$app->params['userPhoto']:$comment['user']['photo'];?>">
+                                                    <img src="/<?= empty($comment['user']['photo'])?Yii::$app->params['userPhoto']:$comment['user']['photo'];?>">
                                                 </a>
                                             </div>
                                             <div class="info pull-left">
@@ -521,7 +521,7 @@ $this->registerJs($pageJs);
             <div class="comment-author">
                 <div class="photo pull-left">
                     <a class="photo" href="javascript:void(0);">
-                        <img src="{$photo}">
+                        <img src="/{$photo}">
                     </a>
                 </div>
                 <div class="info pull-left">
@@ -583,7 +583,7 @@ $this->registerJs($pageJs);
             <div class="comment-author">
                 <div class="photo pull-left">
                     <a class="photo" href="javascript:void(0);">
-                        <img src="{$comment.user.photo}">
+                        <img src="/{$comment.user.photo}">
                     </a>
                 </div>
                 <div class="info pull-left">

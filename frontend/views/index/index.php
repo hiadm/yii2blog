@@ -30,7 +30,9 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                     <div class="carousel-inner" role="listbox">
                         <?php foreach($bestArticle as $key=>$item):?>
                         <div class="item <?= $key?'':'active'?>" style="max-height: 263px;">
-                            <img src="<?= $item['bigimg']?>" alt="<?= $item['title']?>" >
+                            <a href="<?= Url::to(['/content/article/view', 'id'=>$item['id']])?>">
+                                <img src="/<?= $item['bigimg']?>" alt="<?= $item['title']?>" >
+                            </a>
                             <div class="carousel-caption">
                                 <?= $item['title']?>
                             </div>
@@ -59,7 +61,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                             ?>
                                 <li class="subjects">
                                     <a href="<?= Url::to(['/content/subject/view', 'id'=>$item['id']]);?>">
-                                        <img src="<?= $item['logo']?>">
+                                        <img src="/<?= $item['logo']?>">
                                         <span><?= $item['name']?></span>
 
                                     </a>
@@ -90,7 +92,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                         <li class="items">
                             <div class="author">
                                 <a class="pull-left" href="javascript:void(0);">
-                                    <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
+                                    <img class="img-responsive" src="/<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                 </a>
                                 <div class="info pull-left">
                                     <a href="javascript:void(0);"><?= $article['user']['username']?></a>
@@ -103,7 +105,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                                     <a class="title" href="<?= Url::to(['/content/article/view','id'=>$article['id']])?>"><?= Helper::truncate_utf8_string(Html::encode($article['title']),22)?></a>
                                     <p><?= Helper::truncate_utf8_string(Html::encode($article['brief']),80)?></p>
                                 </div>
-                                <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="<?= $article['smallimg']?>"></div>
+                                <div class="brief-right col-sm-3 hidden-xs"><img class="img-responsive" src="/<?= $article['smallimg']?>"></div>
                             </div>
                             <div class="params">
                                 <a class="subject-tag" href="<?= Url::to(['/content/subject/view',"id"=>$article['subject']['id']])?>"><?= $article['subject']['name']?></a>
@@ -125,7 +127,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                         <li class="items">
                             <div class="author">
                                 <a class="pull-left" href="javascript:void(0);">
-                                    <img class="img-responsive" src="<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
+                                    <img class="img-responsive" src="/<?= !empty($article['user']['photo'])?$article['user']['photo']:$this->params['userPhoto'];?>">
                                 </a>
                                 <div class="info pull-left">
                                     <a href="javascript:void(0);"><?= $article['user']['username']?></a>
@@ -191,7 +193,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                 <div class="media">
                     <div class="media-left media-middle">
                         <a href="javascript:void(0);">
-                            <img width="64px" class="media-object" src="static/home/img/code.png" alt="...">
+                            <img width="64px" class="media-object" src="/static/home/img/code.png" alt="...">
                         </a>
                     </div>
                     <div class="media-body">

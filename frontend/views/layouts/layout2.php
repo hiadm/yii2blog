@@ -38,7 +38,7 @@ $this->registerCssFile('static/home/css/signup.css',['depends'=>'frontend\assets
         <div class="container-fluid">
             <div class="pull-left logo">
                 <a href="/">
-                    <!--                    <img class="logo" alt="daimajie.com" src="static/home/img/logo.png">-->
+                    <!--                    <img class="logo" alt="daimajie.com" src="/static/home/img/logo.png">-->
                     <?= $this->params['siteInfo']['name']?>
                 </a>
             </div>
