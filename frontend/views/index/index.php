@@ -187,20 +187,7 @@ $this->registerMetaTag(array("name"=>"description","content"=>"{$this->params['s
                     <?php endif;?>
 
                 </div>
-
-                <!-- 二维码 -->
-                <hr>
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <a href="javascript:void(0);">
-                            <img width="64px" class="media-object" src="/static/home/img/code.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">不妨先来看看</h4>
-                        徽章是一个修饰性的元素，它们本身细小而并不显眼，但掺杂在其它元素中就显得尤为突出了。
-                    </div>
-                </div>
+                
 
                 <!-- 友链 -->
                 <hr>

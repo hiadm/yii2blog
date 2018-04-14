@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use frontend\assets\LayerAsset;
 use frontend\assets\HomeAsset;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 LayerAsset::register($this);
 HomeAsset::register($this);
@@ -63,9 +64,15 @@ HomeAsset::register($this);
                             <a href="javascript:void(0);">微信公众号</a>
                         </li>
                     </ul>
-                    <form class="search navbar-form navbar-left">
-                        <input type="search" placeholder="搜索...">
-                    </form>
+                    <?php $form = ActiveForm::begin([
+                            'action' => ['/content/search/index'],
+                            'method' => 'get',
+                            'options'=>[
+                                'class'=>"search navbar-form navbar-left",
+                            ]
+                    ])?>
+                        <input type="search" name="words" value="<?= !empty($_GET['words'])?Html::encode($_GET['words']):'';?>">
+                    <?php ActiveForm::end()?>
 
 
                     <ul class="nav navbar-nav navbar-right">

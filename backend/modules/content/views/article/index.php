@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         ?>
         <?= Html::a('草稿箱', ['index','isdraft'=>1], ['class' => 'btn btn-info btn-flat pull-left']) ?>
-        <?= Html::a('回收站', ['index','isrecycle'=>1], ['class' => 'btn btn-danger btn-flat pull-left']) ?>
+        <?php //Html::a('回收站', ['index','isrecycle'=>1], ['class' => 'btn btn-danger btn-flat pull-left']) ?>
         <?= Html::a('全部', ['index'], ['class' => 'btn btn-warning btn-flat pull-left']) ?>
 
         </div>
