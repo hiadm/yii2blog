@@ -46,12 +46,12 @@ return [
             'errorAction' => 'index/error',
         ],
 
-        'urlManager' => [
+        /*'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => true,
             'rules' => [
             ],
-        ],
+        ],*/
 
     ],
     'params' => $params,
